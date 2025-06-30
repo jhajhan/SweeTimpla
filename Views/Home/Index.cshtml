@@ -1,9 +1,114 @@
 ﻿@model IEnumerable<DIYFilipinoDessert.Models.DessertKit>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    @foreach (var kit in Model)
-    {
-        <h1>@kit.Name</h1>
-    }
+@{
+    ViewData["Title"] = "Home";
+}
+
+<!-- SweeTimpla Modern Hero Section: Side-by-side, Vertically Centered -->
+<div class="sweetimpla-hero w-100 d-flex align-items-center justify-content-center" style="min-height: 90vh;">
+    <div class="container-fluid px-0">
+        <div class="row align-items-center justify-content-center mx-0" style="min-height:70vh;">
+            <!-- Left: Text and buttons -->
+            <div class="col-lg-6 col-12 text-lg-start text-center px-4 px-lg-5 mb-4 mb-lg-0">
+                <p class="mb-2 fw-bold" style="color: #5A250F;">Hungry?</p>
+                <h1 class="display-3 fw-bold mb-3" style="color:#222;">
+                    <span style="color:#A3D86B;">SweeTimpla</span> Brings You Home
+                </h1>
+                <p class="lead mb-4" style="color: #5A250F;">
+                    Here you’ll find all the best quality and fun Filipino dessert kits to satisfy your sweet cravings.
+                </p>
+                <div class="d-flex gap-3 justify-content-lg-start justify-content-center flex-wrap">
+                    <a class="btn btn-lg btn-main" asp-action="OrderAKit">Order A Kit</a>
+                    <a class="btn btn-lg btn-main" asp-action="BuildYourOwn">Build Your Own Kit</a>
+                </div>
+            </div>
+            <!-- Cupcake Hihi -->
+            <div class="col-lg-5 d-flex justify-content-center align-items-center px-3 px-lg-4 position-relative">
+                <img src="~/images/Cupcake.png"
+                     alt="Cupcake"
+                     style="width: 330px; max-width: 100%; height: auto; z-index:2; position:relative;" />
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
+
+
+<!-- Featured Kits -->
+<div class="container py-5">
+    <h2 class="text-center fw-bold mb-4" style="color: #5A250F;">Featured Dessert Kits</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-3 mb-4">
+            <div class="card shadow-sm rounded-4">
+                <img src="/images/Bibingka.jpg" class="card-img-top rounded-top-4" alt="Bibingka">
+                <div class="card-body text-center">
+                    <h5 class="card-title" style="color: #5A250F;">Bibingka Kit</h5>
+                    <p style="color: #5A250F;">₱250</p>
+                    <a href="#" class="btn btn-outline-success"
+                       style="border-color: #89FF9F; color: #5A250F;">Buy Now</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card shadow-sm rounded-4">
+                <img src="/images/Halohalo.jpg" class="card-img-top rounded-top-4" alt="Halo-Halo">
+                <div class="card-body text-center">
+                    <h5 class="card-title" style="color: #5A250F;">Halo-Halo Kit</h5>
+                    <p style="color: #5A250F;">₱220</p>
+                    <a href="#" class="btn btn-outline-success"
+                       style="border-color: #89FF9F; color: #5A250F;">Buy Now</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card shadow-sm rounded-4">
+                <img src="/images/Suman.jpg" class="card-img-top rounded-top-4" alt="Suman">
+                <div class="card-body text-center">
+                    <h5 class="card-title" style="color: #5A250F;">Suman Kit</h5>
+                    <p style="color: #5A250F;">₱180</p>
+                    <a href="#" class="btn btn-outline-success"
+                       style="border-color: #89FF9F; color: #5A250F;">Buy Now</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card shadow-sm rounded-4">
+                <img src="/images/Maja.jpg" class="card-img-top rounded-top-4" alt="Maja Blanca">
+                <div class="card-body text-center">
+                    <h5 class="card-title" style="color: #5A250F;">Maja Blanca Kit</h5>
+                    <p style="color: #5A250F;">₱210</p>
+                    <a href="#" class="btn btn-outline-success"
+                       style="border-color: #89FF9F; color: #5A250F;">Buy Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Why Choose Us -->
+<div class="container py-5" style="background-color: #FFE3A8;">
+    <h2 class="text-center fw-bold mb-4" style="color: #5A250F;">Why Choose SweeTimpla?</h2>
+    <div class="row text-center">
+        <div class="col-md-4">
+            <div class="card p-3 shadow-sm rounded-4" style="background: #FFF;">
+                <h5 style="color: #5A250F;">✨ Authentic Filipino Flavor</h5>
+                <p style="color: #5A250F;">All recipes and kits are inspired by classic Filipino favorites, prepared the traditional way.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-3 shadow-sm rounded-4" style="background: #FFF;">
+                <h5 style="color: #5A250F;">🍃 Locally Sourced Goodness</h5>
+                <p style="color: #5A250F;">We support local farmers and producers for the freshest, highest-quality ingredients.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-3 shadow-sm rounded-4" style="background: #FFF;">
+                <h5 style="color: #5A250F;">🧑‍🍳 Easy & Fun for Everyone</h5>
+                <p style="color: #5A250F;">Our kits are designed for all ages — perfect for bonding, learning, and enjoying desserts at home.</p>
+            </div>
+        </div>
+    </div>
+</div>
+

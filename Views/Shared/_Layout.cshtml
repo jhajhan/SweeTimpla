@@ -3,44 +3,107 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - DIYFilipinoDessert</title>
+    <title>@ViewData["Title"] - SweeTimpla</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/DIYFilipinoDessert.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ADET_Nikki_FrontEnd.styles.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DIYFilipinoDessert</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+        <nav class="navbar navbar-expand-lg navbar-light custom-navbar shadow-sm py-3">
+            <div class="container">
+                <!-- Logo and Brand Name (left) -->
+                <a class="navbar-brand d-flex align-items-center" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/LogoName.png" alt="SweeTimpla Logo" width="170" style="max-height:56px;">
+                </a>
+                <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Kits" asp-action="Index">Kits</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="BuildYourOwn">Build Your Own</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="About">About</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Cart" asp-action="Index">Cart</a></li>
                     </ul>
                 </div>
-            </div>
+
+                <!-- Right Side: Search and Auth/Profile -->
+                <div class="d-flex align-items-center gap-3">
+                    <!-- Search textbox always visible -->
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Search kits..."
+                           style="width: 190px; background:#FFF; border:2px solid #E4DFDF; color:#5A250F;" />
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <!-- Profile picture if logged in -->
+                        <a href="/Profile">
+                            <img src="~/images/profilepic.png" alt="Profile" class="rounded-circle" style="width:40px; height:40px; object-fit:cover; border:2px solid #A3D86B;">
+                        </a>
+                    }
+                    else
+                    {
+                        <!-- Single Login/Sign up button if not logged in -->
+                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#loginModal"
+                                style="background:#A3D86B; color:#5A250F; border:none;">
+                            Login / Sign up
+                        </button>
+                    }
+                </div>
+
         </nav>
+
+        <!-- Login Modal -->
+        <div class="modal fade" id="loginModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content rounded-4">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Login to SweeTimpla</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="email" class="form-control mb-2" placeholder="Email">
+                        <input type="password" class="form-control mb-2" placeholder="Password">
+                        <button class="btn btn-success w-100" style="background:#A3D86B; color:#5A250F; border:none;">Login</button>
+                    </div>
+                    <div class="modal-footer">
+                        <span>Don’t have an account?</span>
+                        <button class="btn btn-link p-0" data-bs-target="#signupModal" data-bs-toggle="modal" data-bs-dismiss="modal">Sign up</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sign up Modal -->
+        <div class="modal fade" id="signupModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content rounded-4">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Create your SweeTimpla account</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" class="form-control mb-2" placeholder="Full Name">
+                        <input type="email" class="form-control mb-2" placeholder="Email">
+                        <input type="password" class="form-control mb-2" placeholder="Password">
+                        <button class="btn btn-success w-100" style="background:#A3D86B; color:#5A250F; border:none;">Sign up</button>
+                    </div>
+                    <div class="modal-footer">
+                        <span>Already have an account?</span>
+                        <button class="btn btn-link p-0" data-bs-target="#loginModal" data-bs-toggle="modal" data-bs-dismiss="modal">Login</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </header>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - DIYFilipinoDessert - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
