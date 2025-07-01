@@ -2,72 +2,84 @@
 using DIYFilipinoDessert.Data;
 
 using Microsoft.EntityFrameworkCore;
+using DIYFilipinoDessert.Services;
+using DIYFilipinoDessert.Models;
 
 namespace DIYFilipinoDessert.Controllers
 {
-    public class CartController : Controller
+    public class CartController : AuthenticationController
     {
 
-        private readonly ILogger<CartController> _logger;
-        private readonly ApplicationDbContext _context;
+
+        private readonly CartService _cartService;
 
         public CartController(ApplicationDbContext context, ILogger<CartController> logger)
         {
-            _context = context;
-            _logger = logger;
+
+            _cartService = new CartService(context);
         }
 
         //This action will return the view for the Cart page
         public IActionResult Index(int account_id)
         {
+            var loginCheck = IsUserLoggedIn();
+            if (loginCheck != null)
+                return loginCheck;
             // Fetch the cart and the cart items for the given account_id
-            var cart = _context.Carts
-                .Include(c => c.Items)
-                .ThenInclude(ci => ci.DessertKit)
-                .FirstOrDefault(c => c.UserId == account_id);
-
+            var cart = _cartService.GetCartByUserId(account_id);
             return View(cart);
         }
 
         // This action will process adding an item to the cart
         [HttpPost]
-        public IActionResult AddToCart(int id, int user_id)
+        public IActionResult AddToCartFromKits(int dessertKitId, decimal price)
         {
-            var dessertKit = _context.DessertKits.Find(id);
-            if (dessertKit == null)
+        
+
+            var cartItem = new Cart
             {
-                return NotFound();
-            }
-            // Check if the cart exists for the user, if not create one
-            var cart = _context.Carts.FirstOrDefault(c => c.UserId == user_id);
-            if (cart == null)
-            {
-                cart = new Models.Cart { UserId = user_id};
-                _context.Carts.Add(cart);
-                _context.SaveChanges();
-            }
-            // Add the dessert kit to the cart
-            var cartItem = new Models.CartItem
-            {
-                DessertKit = dessertKit,
-                Id = cart.Id,
-                Quantity = 1 // Default quantity is 1
+                DessertKitId = dessertKitId,
+                UserId = HttpContext.Session.GetInt32("UserId").GetValueOrDefault(),
+                Quantity = 1,
+                Price = price,
+                Toppings = null,
+                Extras = null,
+                Notes = null
             };
-            _context.CartItems.Add(cartItem);
-            _context.SaveChanges();
+
+            _cartService.AddToCart(cartItem);  // ✅ Reusing the same service
+
+            return RedirectToAction("Index", "Cart");
+        }
+
+        [HttpPost]
+        public IActionResult AddToCartBuild(int kit_id, string[] toppings, string[] extras, string[] notes, decimal price)
+        {
+            IsUserLoggedIn();
+            string toppingsCsv = toppings != null ? string.Join(", ", toppings) : "";
+            string extrasCsv = extras != null ? string.Join(", ", extras) : "";
+
+            var cartItem = new Cart
+            {
+                UserId = HttpContext.Session.GetInt32("UserId").GetValueOrDefault(),
+                DessertKitId = kit_id,
+                Quantity = 1, // Default quantity is set to 1
+                Price = price,
+                Toppings = toppingsCsv,
+                Extras = extrasCsv,
+                Notes = notes != null ? string.Join(", ", notes) : ""
+            };
+
+            _cartService.AddToCart(cartItem);
+
             return RedirectToAction("Index");
+
         }
 
         // This action will process removing an item from the cart
         public IActionResult RemoveFromCart(int id)
         {
-            var cartItem = _context.CartItems.Find(id);
-            if (cartItem == null)
-            {
-                return NotFound();
-            }
-            _context.CartItems.Remove(cartItem);
-            _context.SaveChanges();
+            _cartService.RemoveFromCart(id);
             return RedirectToAction("Index");
         }
 
@@ -75,17 +87,7 @@ namespace DIYFilipinoDessert.Controllers
         [HttpPost]
         public IActionResult RemoveSelectedItems(List<int> itemIds)
         {
-            if (itemIds == null || !itemIds.Any())
-            {
-                return BadRequest("No items selected for removal.");
-            }
-            var cartItems = _context.CartItems.Where(ci => itemIds.Contains(ci.Id)).ToList();
-            if (!cartItems.Any())
-            {
-                return NotFound("No items found for the provided IDs.");
-            }
-            _context.CartItems.RemoveRange(cartItems);
-            _context.SaveChanges();
+            _cartService.RemoveSelectedItems(itemIds);
             return RedirectToAction("Index");
         }
 
@@ -93,21 +95,7 @@ namespace DIYFilipinoDessert.Controllers
         [HttpPost]
         public IActionResult UpdateCartItem(int id, int quantity)
         {
-            var cartItem = _context.CartItems.Find(id);
-            if (cartItem == null)
-            {
-                return NotFound();
-            }
-            if (quantity <= 0)
-            {
-                _context.CartItems.Remove(cartItem);
-            }
-            else
-            {
-                cartItem.Quantity = quantity;
-                _context.CartItems.Update(cartItem);
-            }
-            _context.SaveChanges();
+            _cartService.UpdateCartItem(id, quantity);
             return RedirectToAction("Index");
         }
     }

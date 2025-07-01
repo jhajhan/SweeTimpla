@@ -40,50 +40,21 @@
 <div class="container py-5">
     <h2 class="text-center fw-bold mb-4" style="color: #5A250F;">Featured Dessert Kits</h2>
     <div class="row justify-content-center">
-        <div class="col-md-3 mb-4">
-            <div class="card shadow-sm rounded-4">
-                <img src="/images/Bibingka.jpg" class="card-img-top rounded-top-4" alt="Bibingka">
-                <div class="card-body text-center">
-                    <h5 class="card-title" style="color: #5A250F;">Bibingka Kit</h5>
-                    <p style="color: #5A250F;">₱250</p>
-                    <a href="#" class="btn btn-outline-success"
-                       style="border-color: #89FF9F; color: #5A250F;">Buy Now</a>
+        @foreach (var kit in Model)
+        {
+            <div class="col-md-3 mb-4">
+                <div class="card shadow-sm rounded-4">
+                    <img src="@kit.ImageUrl" class="card-img-top rounded-top-4" alt="@kit.Name">
+                    <div class="card-body text-center">
+                        <h5 class="card-title" style="color: #5A250F;">@kit.Name Kit</h5>
+                        <p style="color: #5A250F;">₱@kit.Price</p>
+                        <a href="#" class="btn btn-outline-success"
+                           style="border-color: #89FF9F; color: #5A250F;">Buy Now</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-3 mb-4">
-            <div class="card shadow-sm rounded-4">
-                <img src="/images/Halohalo.jpg" class="card-img-top rounded-top-4" alt="Halo-Halo">
-                <div class="card-body text-center">
-                    <h5 class="card-title" style="color: #5A250F;">Halo-Halo Kit</h5>
-                    <p style="color: #5A250F;">₱220</p>
-                    <a href="#" class="btn btn-outline-success"
-                       style="border-color: #89FF9F; color: #5A250F;">Buy Now</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 mb-4">
-            <div class="card shadow-sm rounded-4">
-                <img src="/images/Suman.jpg" class="card-img-top rounded-top-4" alt="Suman">
-                <div class="card-body text-center">
-                    <h5 class="card-title" style="color: #5A250F;">Suman Kit</h5>
-                    <p style="color: #5A250F;">₱180</p>
-                    <a href="#" class="btn btn-outline-success"
-                       style="border-color: #89FF9F; color: #5A250F;">Buy Now</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 mb-4">
-            <div class="card shadow-sm rounded-4">
-                <img src="/images/Maja.jpg" class="card-img-top rounded-top-4" alt="Maja Blanca">
-                <div class="card-body text-center">
-                    <h5 class="card-title" style="color: #5A250F;">Maja Blanca Kit</h5>
-                    <p style="color: #5A250F;">₱210</p>
-                    <a href="#" class="btn btn-outline-success"
-                       style="border-color: #89FF9F; color: #5A250F;">Buy Now</a>
-                </div>
-            </div>
-        </div>
+}
+
     </div>
 </div>
 

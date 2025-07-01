@@ -1,61 +1,69 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using DIYFilipinoDessert.Data;
 using Microsoft.EntityFrameworkCore;
+using DIYFilipinoDessert.Services;
+using System.Runtime.CompilerServices;
+using DIYFilipinoDessert.ViewModels;
 
 namespace DIYFilipinoDessert.Controllers
 {
 
-   public class OrderController: Controller
+   public class OrderController: AuthenticationController
     {
-        private readonly ILogger<OrderController> _logger;
-        private readonly ApplicationDbContext _context;
+    
+        private readonly IOrderService _orderService;
+        private readonly ICartService _cartService;
 
-        public OrderController(ApplicationDbContext context, ILogger<OrderController> logger)
+        public OrderController(ApplicationDbContext context)
         {
-            _context = context;
-            _logger = logger;
+            _orderService = new OrderService(context);
+            _cartService = new CartService(context);
         }
    
         public IActionResult Index()
         {
-            var orders = _context.Orders
-                .Include(o => o.Items)
-                .ThenInclude(oi => oi.DessertKit)
-                .ToList();
-
+            IsUserLoggedIn();
+            var orders = _orderService.GetAllOrders();
             return View(orders);
         }
-        //This action will return the view when a customer checkouts/orders 
-        //It will accept list of dessert kits and their quantities
-        public IActionResult Checkout(List<int> dessertKitIds, List<int> quantities)
+
+
+        [HttpPost]
+        public IActionResult CheckoutSelected(int[] selectedCartIds)
         {
-            if (dessertKitIds == null || quantities == null || dessertKitIds.Count != quantities.Count)
+            int userId = HttpContext.Session.GetInt32("UserId").GetValueOrDefault();
+            var selectedItems = _cartService.GetCartByIds(userId, selectedCartIds);
+
+            if (!selectedItems.Any())
             {
-                return BadRequest("Invalid order data.");
+                return RedirectToAction("Cart");
             }
-            var order = new Models.Order
+
+            var viewModel = new CheckoutViewModel
             {
-                OrderDate = DateTime.Now,
-                Items = new List<Models.OrderItem>()
+                CartItems = selectedItems
             };
-            for (int i = 0; i < dessertKitIds.Count; i++)
-            {
-                var dessertKitId = dessertKitIds[i];
-                var quantity = quantities[i];
-                var dessertKit = _context.DessertKits.Find(dessertKitId);
-                if (dessertKit != null && quantity > 0)
-                {
-                    order.Items.Add(new Models.OrderItem
-                    {
-                        DessertKit = dessertKit,
-                        Quantity = quantity
-                    });
-                }
-            }
-            _context.Orders.Add(order);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
+
+            return View("Checkout", viewModel);
         }
+
+
+        //This action is called when customer confirms their order
+        [HttpPost]
+        public IActionResult ConfirmCheckout(int[] cartItemIds, string PaymentMethod, string ShippingAddress)
+        {
+            int userId = HttpContext.Session.GetInt32("UserId").GetValueOrDefault();
+
+            // Delegate to service
+            bool success = _orderService.CreateOrderFromCart(userId, cartItemIds, PaymentMethod, ShippingAddress);
+
+            if (!success)
+                return RedirectToAction("Cart", "Cart");
+
+            return RedirectToAction("OrderSuccess");
+        }
+
+
 
     }
 }

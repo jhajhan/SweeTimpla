@@ -1,4 +1,5 @@
 ﻿using DIYFilipinoDessert.Data;
+using DIYFilipinoDessert.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DIYFilipinoDessert.Controllers
@@ -6,31 +7,44 @@ namespace DIYFilipinoDessert.Controllers
     public class DessertKitController : Controller
     {
 
-        private readonly ILogger<DessertKitController> _logger;
-        private readonly ApplicationDbContext _context;
+   
+        private readonly IDessertKitService _dessertKitService;
 
         public DessertKitController(ApplicationDbContext context, ILogger<DessertKitController> logger)
         {
-            _context = context;
-            _logger = logger;
+
+            _dessertKitService = new DessertKitService(context);
         }
 
         public IActionResult Index()
         {
             // This action will return the view for the Dessert Kit page
-            var dessertkits = _context.DessertKits.ToList();
+            var dessertkits = _dessertKitService.GetAllDessertKits();
             return View(dessertkits);
         }
 
-        public IActionResult Details(int id)
+        [HttpGet]
+        public IActionResult GetKitDetails(int kitId)
         {
-            // This action will return the details of a specific Dessert Kit
-            var dessertKit = _context.DessertKits.Find(id);
-            if (dessertKit == null)
+            // print id
+           
+            Console.WriteLine($"Fetching details for kit ID: {kitId}");
+            var kit = _dessertKitService.GetDessertKitById(kitId); // or however you fetch the kit
+            if (kit == null) return NotFound();
+
+            return Json(new
             {
-                return NotFound();
-            }
-            return View(dessertKit);
+                name = kit.Name,
+                includes = kit.Ingredients,        // customize field names as needed
+                tools = kit.ToolList,
+                prepTime = kit.PreparationTime,
+                cookTime = kit.CookingTime,
+                totalTime = kit.TotalTime,
+                servings = kit.ServingSize,
+                price = kit.Price,
+
+            });
         }
+
     }
 }

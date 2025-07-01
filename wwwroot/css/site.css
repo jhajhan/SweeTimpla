@@ -108,3 +108,710 @@ body {
     .buildkit-steps > li:last-child {
         margin-bottom: 0; /* No extra space after the last step */
     }
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #ffffff;
+    color: #1a1a1a;
+    line-height: 1.6;
+}
+
+
+
+/* main section */
+.main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 60px 40px;
+    flex-wrap: wrap;
+}
+
+.men_text h1 {
+    font-size: 50px;
+    font-weight: bold;
+    color: #1a1a1a;
+}
+
+.men_text span {
+    color: #22c55e;
+    font-family: 'Pacifico', cursive;
+}
+
+.main_image img {
+    width: 400px;
+    max-width: 100%;
+    border-radius: 16px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    margin-top: 80px;
+    margin-left: auto;
+}
+
+/* main description paragraph */
+section#Home p {
+    padding: 0 60px;
+    margin-top: 20px;
+    font-size: 18px;
+    color: #333333;
+    max-width: 900px;
+}
+
+/* order button */
+.main_btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 40px 60px;
+}
+
+    .main_btn a {
+        text-decoration: none;
+        background-color: #22c55e; /* vibrant green */
+        color: #ffffff;
+        padding: 12px 25px;
+        border-radius: 30px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+        .main_btn a:hover {
+            background-color: #15803d; /* darker green */
+        }
+
+    .main_btn i {
+        font-size: 20px;
+        color: #15803d;
+        transition: transform 0.3s;
+    }
+
+    .main_btn:hover i {
+        transform: translateX(5px);
+    }
+
+
+/* ====================================================================== kits styles ============================================================== */
+/* kit section */
+.section-title {
+    text-align: center;
+    font-size: 45px;
+    margin: 40px 0 20px;
+    color: #5A250F;
+    font-family: 'Pacifico', cursive;
+}
+
+/* kits filter */
+.kit-filters {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+    .kit-filters select {
+        padding: 10px 12px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 14px;
+    }
+
+/* kits grid */
+.kits-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 30px;
+    padding: 0 60px;
+}
+
+.kit-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s;
+    border: 1px solid #5A250F;
+}
+
+    .kit-card:hover {
+        transform: translateY(-5px);
+        background: #edfff1;
+    }
+
+    .kit-card img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+    }
+
+    .kit-card h3 {
+        margin: 15px 0 5px;
+        font-size: 24px;
+        color: #5A250F;
+    }
+
+    .kit-card h4 {
+        font-size: 14px;
+        color: #616161;
+        margin: 10px 15px;
+        font-style: italic;
+        text-align: justify;
+        line-height: 1.4;
+        min-height: 50px;
+    }
+
+    /* kit card price */
+    .kit-card .price {
+        font-size: 18px;
+        font-weight: bold;
+        color: #A3D86B;
+    }
+
+    /* kit card button */
+    .kit-card button {
+        margin: 15px 0 20px;
+        background: #A3D86B;
+        color: #fff;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+        .kit-card button:hover {
+            background: #96C24E;
+        }
+
+/*========================================================================== dessert kits modal style =====================================================*/
+.kit-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+    .kit-modal.hidden {
+        display: none;
+    }
+
+/* kit modal content */
+.kit-modal-content {
+    background: linear-gradient(145deg, #ecf7ecf6, #edfff1);
+    border-radius: 24px;
+    padding: 30px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    position: relative;
+    text-align: left;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    font-family: 'Poppins', sans-serif;
+    animation: slideUp 0.4s ease-in-out;
+    overflow-y: auto;
+}
+
+    /* kit modal dessert name */
+    .kit-modal-content h3 {
+        font-size: 26px;
+        margin-bottom: 12px;
+        color: #5A250F;
+    }
+
+    /* kit modal description */
+    .kit-modal-content p {
+        margin: 10px 0;
+        color: #1a1a1a;
+        line-height: 1.6;
+        font-size: 15px;
+    }
+
+    /* kit modal price */
+    .kit-modal-content .price {
+        display: block;
+        margin: 18px 0;
+        font-size: 22px;
+        font-weight: bold;
+        color: #A3D86B;
+    }
+
+    /* kit modal add to cart button */
+    .kit-modal-content .add-to-cart {
+        display: inline-block;
+        background: #A3D86B;
+        /* background: linear-gradient(to right, #5cac7b, #5cf07c);*/
+        color: #fff;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 30px;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+        .kit-modal-content .add-to-cart:hover {
+            background: #96C24E;
+            transform: scale(1.05);
+        }
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    color: #aaa;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+    .close-modal:hover {
+        color: #5f7969;
+    }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* ====================================================================== cart styles ============================================================== */
+.cart-main {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+/* add to cart container */
+.cart-table-container {
+    flex: 2;
+    max-width: 1000%;
+}
+
+.cart-section {
+    background: #fff;
+    padding: 60px;
+}
+
+.cart-container {
+    max-width: 1500px;
+    margin: auto;
+}
+
+/* add to cart table */
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+    margin-top: 10px;
+}
+
+    .cart-table th,
+    .cart-table td {
+        padding: 15px;
+        border: 1px solid #5A250F;
+        text-align: center;
+    }
+
+    .cart-table th {
+        background: #FFE3A8;
+        color: #5A250F;
+        font-size: 22px;
+    }
+
+    .cart-table td {
+        font-size: 18px;
+        color: #000;
+    }
+
+/* add to cart summary */
+.cart-summary {
+    text-align: right;
+    margin-bottom: 50px;
+}
+
+    .cart-summary p {
+        font-size: 18px;
+        margin: 10px 5px;
+    }
+
+/* add to cart check out button */
+.checkout-btn {
+    background: #A3D86B;
+    color: #fff;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+    .checkout-btn:hover {
+        background: #96C24E;
+    }
+
+/* add to cart quantity control */
+.quantity-control {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+    .quantity-control button {
+        background-color: #A3D86B;
+        color: #fff;
+        border: none;
+        padding: 4px 7px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.2s;
+    }
+
+        .quantity-control button:hover {
+            background-color: #96C24E;
+        }
+
+    .quantity-control .quantity {
+        padding: 4px 12px;
+        min-width: 24px;
+        text-align: center;
+        color: #1a1a1a;
+    }
+
+/* add to cart remove button */
+.remove-btn {
+    background-color: #A3D86B;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+    .remove-btn:hover {
+        background-color: #96C24E;
+        transform: scale(1.05);
+    }
+
+/* ============================================================ confirm order modal style ============================================== */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+/* confirm order modal content box */
+.modal-content {
+    background: linear-gradient(145deg, #ecf7ecf6, #edfff1);
+    margin: 10% auto;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+    .modal-content h3 {
+        font-size: 25px;
+        color: #5A250F;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* confirm order qr code */
+.qr-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.qr-image {
+    width: 200px;
+    height: auto;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+/* confirm order total price display */
+.total-price-display {
+    font-size: 16px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+/* confirm order modal inputs */
+.modal-content input,
+.modal-content select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+/* confirm order button */
+.confirm-btn {
+    width: 100%;
+    background: #A3D86B;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background 0.3s ease;
+}
+
+    .confirm-btn:hover {
+        background: #96C24E;
+    }
+
+/* instructions modal style */
+#instructionsModal.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+/* modal content box 
+.modal-instructions {
+  background-color: #fff;
+  border-radius: 12px;
+  max-width: 460px;
+  margin: 10% auto;
+  padding: 30px;
+  position: relative;
+  font-family: 'Segoe UI', sans-serif;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  animation: fadeSlideIn 0.3s ease;
+}*/
+
+@keyframes fadeSlideIn {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-instructions .close-btn {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    font-size: 22px;
+    color: #444;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+    .modal-instructions .close-btn:hover {
+        color: #5f7969;
+    }
+
+/* title and description */
+.modal-instructions .title {
+    margin-top: 0;
+    font-size: 22px;
+    color: #5A250F;
+}
+
+.modal-instructions .description {
+    font-size: 16px;
+    color: #1a1a1a; /* dark gray/near black */
+    margin: 10px 0 20px;
+}
+
+/* instructions list */
+.modal-instructions .instruction-list {
+    padding-left: 20px;
+    margin-bottom: 25px;
+}
+
+    .modal-instructions .instruction-list li {
+        font-size: 15px;
+        margin-bottom: 10px;
+        text-align: left;
+        color: #1a1a1a;
+    }
+
+/* download instructions button and track ur order buttons */
+.button-row {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.download-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8px 14px;
+    background-color: #5A250F;
+    color: #FFFFFF;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+}
+
+/*====================================================== Track Order Section =====================================================*/
+.track-order-section {
+    background-color: #ffffff; /* light apricot */
+    padding: 2rem;
+    color: #5A250F;
+    font-family: 'Pacifico', cursive;
+}
+
+    .track-order-section h2 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        font-family: 'Pacifico', cursive;
+    }
+
+.order-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    gap: 2rem;
+    max-width: 1500px;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+.order-card {
+    background-color: #FFFFFF;
+    border: 2px solid #5A250F;
+    border-radius: 10px;
+    flex-direction: row;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    max-width: 500px;
+    min-width: 500px;
+    margin: 0 auto;
+}
+
+.order-image img {
+    width: 190px;
+    height: 190px;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.order-details {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.status {
+    padding: 4px 4px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+    .status.preparing {
+        color: #000000;
+    }
+
+.download-btn, .trackOrder-btn {
+    display: inline-block;
+    width: 200px; /* fixed width */
+    text-align: center;
+    margin-top: 10px;
+    background-color: #5A250F;
+    color: #FFFFFF;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    transition: 0.3s ease;
+}
+
+    .download-btn:hover {
+        background-color: #864524;
+        color: #FFFFFF;
+    }
+
+/* =================================================================== Error/Alert Messages ================================================================== */
+#orderResult p[style*="color: red"] {
+    color: red;
+    font-weight: bold;
+}
+
+.swal2-popup {
+    border-radius: 5px;
+    font-family: 'Poppins', sans-serif;
+    width: 400px;
+    padding: 1.5rem;
+    font-size: 14px;
+}
+

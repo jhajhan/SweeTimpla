@@ -1,0 +1,92 @@
+﻿
+
+    <!-- =================================================== Cart Section ================================================ -->
+    <section id="Cart" class="cart-section">
+        <h2 class="section-title">Your Cart</h2>
+        <div class="cart-container">
+
+            <div class="cart-main">
+                <!-- Cart Table -->
+                <div class="cart-table-container">
+                    <table class="cart-table">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th>Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Cart Summary -->
+            <div class="cart-summary">
+                <p><strong>Subtotal:</strong> ₱0</p>
+                <p><strong>Shipping:</strong> ₱0</p>
+                <p><strong>Total:</strong> <span id="cartTotal">₱0</span></p>
+                <button class="checkout-btn" onclick="openModal()">Proceed to Checkout</button>
+            </div>
+        </div>
+
+        <!-- MODAL for Delivery Info -->
+        <div id="checkoutModal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="closeModal()">&times;</span>
+                <h3>Delivery Information</h3>
+                <input type="text" placeholder="Full Name" required>
+                <input type="text" placeholder="Address" required>
+                <input type="text" placeholder="Contact Number (e.g., 09164524332)" required>
+                <select id="paymentMethod" onchange="handlePaymentChange()">
+                    <option value="">Select Payment Method</option>
+                    <option value="cod">Cash on Delivery</option>
+                    <option value="gcash">GCash</option>
+                </select>
+
+                <!-- QR Code (Initially Hidden) -->
+                <div id="gcashQR" class="qr-container" style="display: none;">
+                    <p><strong>Scan the GCash QR code to pay:</strong></p>
+                    <img src="image/gcash.jpg" alt="GCash QR Code" class="qr-image" />
+                </div>
+
+                <!-- Total Price Display -->
+                <p id="modalTotalPrice" class="total-price-display"><strong>Total Price: </strong>₱0</p>
+
+                <button class="confirm-btn" onclick="confirmOrder()">Confirm Order</button>
+            </div>
+        </div>
+
+        <!-- MODAL: Order Instructions -->
+        <div id="instructionsModal" class="modal">
+            <div class="modal-content modal-instructions">
+                <span class="close-btn" onclick="closeInstructionsModal()">&times;</span>
+                <h3 class="title">Order Placed Successfully!</h3>
+                <p class="description">Thank you for your order. Please read the following instructions:</p>
+                <ul class="instruction-list">
+                    <li>Prepare exact amount if you chose Cash on Delivery.</li>
+                    <li>If you paid via GCash, expect a confirmation message shortly.</li>
+                    <li>Delivery time is within 2–3 business days.</li>
+                    <li>Download Recipe Below:</li>
+                </ul>
+                <!--
+                <div class="button-wrapper">
+                    <button class="download-btn" onclick="downloadInstructions()">🍮Cooking Instructions</button>
+                </div>
+
+
+                <div class="button-wrapper" style="margin-top: 5px;">
+                    <button class="download-btn" onclick="goToTrackOrder()">📦 Track Your Order</button>
+                </div> -->
+
+                <div class="button-row">
+                    <button class="download-btn" onclick="downloadInstructions()">🍮Cooking Instructions</button>
+                    <button class="download-btn" onclick="goToTrackOrder()">📦Track Your Order</button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+

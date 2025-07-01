@@ -1,10 +1,8 @@
-﻿@page
-@model DIYFilipinoDessert.Views.Home.BuildYourOwnModel
-@{
-}
+﻿
+@model IEnumerable<DIYFilipinoDessert.Models.DessertKit>;
 
 @{
-    ViewData["Title"] = "Build Your Own";
+    ViewData["Title"] = "BuildYourOwn";
 }
 
 <div class="container py-5">
@@ -22,10 +20,10 @@
             <li class="mb-2">
                 <b>Choose a base:</b> <br>
                 <select class="form-select mt-1 mb-2" style="max-width:300px;">
-                    <option>Suman</option>
-                    <option>Biko</option>
-                    <option>Kutsinta</option>
-                    <option>Maja Blanca</option>
+                @foreach (var kit in Model)
+                {
+                    <option value = "@kit.Id">@kit.Name</option>
+                }
                 </select>
             </li>
             <li class="mb-2">

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DIYFilipinoDessert.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250613132522_InitialCreate")]
+    [Migration("20250629160033_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -25,6 +25,88 @@ namespace DIYFilipinoDessert.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("DIYFilipinoDessert.Models.Account", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Account");
+                });
+
+            modelBuilder.Entity("DIYFilipinoDessert.Models.Cart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Carts");
+                });
+
+            modelBuilder.Entity("DIYFilipinoDessert.Models.CartItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CartId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DessertKitId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CartId");
+
+                    b.HasIndex("DessertKitId");
+
+                    b.ToTable("CartItems");
+                });
+
             modelBuilder.Entity("DIYFilipinoDessert.Models.DessertKit", b =>
                 {
                     b.Property<int>("Id")
@@ -33,7 +115,7 @@ namespace DIYFilipinoDessert.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Description")
+                    b.Property<string>("CookingTime")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -41,7 +123,18 @@ namespace DIYFilipinoDessert.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Ingredients")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsFeatured")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PreparationTime")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -50,6 +143,14 @@ namespace DIYFilipinoDessert.Migrations
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
+
+                    b.Property<string>("ServingSize")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ToolList")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -130,6 +231,32 @@ namespace DIYFilipinoDessert.Migrations
                     b.ToTable("RecipeSteps");
                 });
 
+            modelBuilder.Entity("DIYFilipinoDessert.Models.Cart", b =>
+                {
+                    b.HasOne("DIYFilipinoDessert.Models.Account", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("DIYFilipinoDessert.Models.CartItem", b =>
+                {
+                    b.HasOne("DIYFilipinoDessert.Models.Cart", null)
+                        .WithMany("Items")
+                        .HasForeignKey("CartId");
+
+                    b.HasOne("DIYFilipinoDessert.Models.DessertKit", "DessertKit")
+                        .WithMany()
+                        .HasForeignKey("DessertKitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DessertKit");
+                });
+
             modelBuilder.Entity("DIYFilipinoDessert.Models.OrderItem", b =>
                 {
                     b.HasOne("DIYFilipinoDessert.Models.DessertKit", "DessertKit")
@@ -158,6 +285,11 @@ namespace DIYFilipinoDessert.Migrations
                         .IsRequired();
 
                     b.Navigation("DessertKit");
+                });
+
+            modelBuilder.Entity("DIYFilipinoDessert.Models.Cart", b =>
+                {
+                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("DIYFilipinoDessert.Models.DessertKit", b =>

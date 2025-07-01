@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace DIYFilipinoDessert.Views.Home
+namespace DIYFilipinoDessert.Views.BuildYourOwn
 {
     public class BuildYourOwnModel : PageModel
     {
