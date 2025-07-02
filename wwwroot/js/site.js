@@ -499,3 +499,57 @@ window.onclick = function (event) {
     }
 }
 
+// Close Login/Sign up modal
+document.querySelectorAll('.btn-close[data-bs-dismiss="modal"]').forEach(btn => {
+    btn.addEventListener('click', function () {
+        document.getElementById('loginSignupModal').style.display = 'none';
+        document.body.classList.remove('modal-open');
+        document.body.style.overflow = '';
+    });
+});
+
+// Switch between Sign In and Sign Up
+function switchToSignUp(e) {
+    e.preventDefault();
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('signUpForm').style.display = 'block';
+    // Change modal title to "Sign Up"
+    document.querySelector('#loginSignupModal h2').innerText = 'Sign Up';
+}
+function switchToLogin(e) {
+    e.preventDefault();
+    document.getElementById('signUpForm').style.display = 'none';
+    document.getElementById('loginForm').style.display = 'block';
+    // Change modal title to "Sign In"
+    document.querySelector('#loginSignupModal h2').innerText = 'Sign In';
+}
+
+// Password show/hide (eye icon)
+function togglePassword(inputId, el) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+    if (input.type === "password") {
+        input.type = "text";
+        el.querySelector('svg').innerHTML =
+            `<circle cx="12" cy="12" r="3"></circle>
+            <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"></path>`
+    } else {
+        input.type = "password";
+        el.querySelector('svg').innerHTML =
+            `<circle cx="12" cy="12" r="3"></circle>
+            <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"></path>`;
+    }
+}
+
+// Forgot password modal
+document.getElementById('forgotPasswordLink').addEventListener('click', function (e) {
+    e.preventDefault();
+    // Hide the main modal
+    document.getElementById('loginSignupModal').style.display = 'none';
+    // Show the forgot password modal
+    let forgotModal = new bootstrap.Modal(document.getElementById('forgotModal'));
+    forgotModal.show();
+    document.body.classList.add('modal-open');
+});
+
+
