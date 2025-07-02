@@ -1,29 +1,19 @@
-﻿namespace DIYFilipinoDessert.Models
+﻿public class User
 {
-    // 🧱 Abstract base class
-    public abstract class User
-    {
-        public int Id { get; set; }
-        public string Username { get; set; }
+    public int Id { get; set; }
+    public string Username { get; set; }
+    public string Email { get; set; }
 
-        public abstract string AccessInterface();
-    }
+    public virtual string AccessInterface() => "/Home/Index";
+}
 
-    // 👤 Customer subclass
-    public class Customer : User
-    {
-        public override string AccessInterface()
-        {
-            return "/";
-        }
-    }
+public class Admin : User
+{
+    public override string AccessInterface() => "/Admin/Index";
 
-    // 🛠 Admin subclass
-    public class Admin : User
-    {
-        public override string AccessInterface()
-        {
-            return "/Admin";
-        }
-    }
+}
+
+public class Customer : User
+{
+    public override string AccessInterface() => "/Home/Index";
 }
