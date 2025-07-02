@@ -1,0 +1,64 @@
+﻿@{
+    ViewData["Title"] = "Register";
+}
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <div>@error.ErrorMessage</div>
+        }
+    </div>
+}
+
+
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh; background: rgba(0,0,0,0.45);">
+    <div class="modal-content sweetimpla-modal px-4 py-3" style="border-radius: 20px; border: none; max-width: 400px;">
+        <!-- Close Button -->
+        <a href="/" class="btn-close position-absolute top-0 end-0 m-3" aria-label="Close" style="z-index:2;"></a>
+
+        <!-- Logo -->
+        <div class="text-center mb-2">
+            <img src="/images/LogoName.png" alt="SweeTimpla" style="height:48px; margin-bottom: 0.3rem;">
+        </div>
+        <div class="sweetimpla-divider mb-3"></div>
+        <h2 class="fw-bold text-center mb-3" style="color:#A3D86B; font-size:2rem;">Sign Up</h2>
+
+        <form id="signUpForm" method="post" action="/Home/Register">
+            <div class="mb-3">
+                <label class="form-label" for="signupName">Full Name</label>
+                <input type="text" id="signupName" name="Username" class="form-control" placeholder="Enter full name" style="border-radius:10px;">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="signupEmail">Email</label>
+                <input type="email" id="signupEmail" name="Email" class="form-control" placeholder="Enter email" style="border-radius:10px;">
+            </div>
+            <div class="mb-2 position-relative">
+                <label class="form-label" for="signupPassword">Password</label>
+                <input type="password" id="signupPassword" name="Password" class="form-control" placeholder="Enter password">
+                <span class="toggle-password" onclick="togglePassword('signupPassword', this)">
+                    <!-- eye icon -->
+                </span>
+            </div>
+
+            <div class="mb-2 position-relative">
+                <label class="form-label" for="signupConfirmPassword">Confirm Password</label>
+                <input type="password" id="signupConfirmPassword" name="ConfirmPassword" class="form-control" placeholder="Re-enter password">
+                <span class="toggle-password" onclick="togglePassword('signupConfirmPassword', this)">
+                    <!-- eye icon -->
+                </span>
+            </div>
+
+            <div class="mb-3 d-flex align-items-center" style="font-size:0.95rem;">
+                <input type="checkbox" id="acceptTerms" name="acceptTerms" style="accent-color: #A3D86B; margin-right: 6px;">
+                <label for="acceptTerms">I accept the <a href="#">Terms</a> & <a href="#">Privacy</a></label>
+            </div>
+
+            <button type="submit" class="btn w-100 mb-3" style="background:#A3D86B; color:#fff; border-radius:10px; font-weight:600; font-size:1.05rem;">Sign up</button>
+            <div class="text-center mb-2" style="font-size:0.97rem;">
+                Already have an account? <a href="/Home/Login" style="color:#3399ff;">Login</a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -815,3 +815,33 @@ section#Home p {
     font-size: 14px;
 }
 
+.sweetimpla-divider {
+    border-bottom: 1.5px solid #eee;
+    width: 85%;
+    margin: 0 auto 18px auto;
+}
+
+.sweetimpla-password-input {
+    padding-right: 44px !important;
+    box-sizing: border-box;
+}
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(25%);
+    cursor: pointer;
+    color: #A3D86B;
+    z-index: 2;
+    height: 22px;
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 600px) {
+    .toggle-password {
+        top: 34px;
+        right: 12px;
+    }
+}

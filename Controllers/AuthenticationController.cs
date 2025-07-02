@@ -9,7 +9,7 @@ namespace DIYFilipinoDessert.Controllers
         {
             if (string.IsNullOrEmpty(HttpContext.Session.GetString("UserId")))
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login", "Home");
             }
             return null;
         }

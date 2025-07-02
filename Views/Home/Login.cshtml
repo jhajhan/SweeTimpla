@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <div>@error.ErrorMessage</div>
+        }
+    </div>
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh; background: rgba(0,0,0,0.45);">
+    <div class="modal-content sweetimpla-modal px-4 py-3" style="border-radius: 20px; border: none; max-width: 400px;">
+        <!-- Close Button -->
+        <a href="/" class="btn-close position-absolute top-0 end-0 m-3" aria-label="Close" style="z-index:2;"></a>
+
+        <!-- Logo -->
+        <div class="text-center mb-2">
+            <img src="/images/LogoName.png" alt="SweeTimpla" style="height:48px; margin-bottom: 0.3rem;">
+        </div>
+        <div class="sweetimpla-divider mb-3"></div>
+        <h2 class="fw-bold text-center mb-3" style="color:#A3D86B; font-size:2rem;">Sign In</h2>
+
+        <form id="loginForm" method="post" action="/Home/Login">
+            <div class="mb-3">
+                <label class="form-label" for="loginEmail" style="font-size: 0.98rem;">Email</label>
+                <input type="email" id="loginEmail" name="Email" class="form-control" placeholder="Enter email" style="border-radius:10px;">
+            </div>
+            <div class="mb-2 position-relative">
+                <label class="form-label" for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" name="Password" class="form-control sweetimpla-password-input" placeholder="Enter password">
+                <span class="toggle-password" onclick="togglePassword('loginPassword', this)">
+                    <!-- eye icon -->
+                </span>
+            </div>
+
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <div>
+                    <input type="checkbox" id="rememberMe" style="accent-color: #A3D86B;">
+                    <label for="rememberMe" style="font-size:0.95rem;">Remember me</label>
+                </div>
+                <a href="/Account/ForgotPassword" style="color:#3399ff;font-size:0.95rem;">Forgot password?</a>
+            </div>
+            <button type="submit" class="btn w-100 mb-3" style="background:#A3D86B; color:#fff; border-radius:10px; font-weight:600; font-size:1.05rem;">Sign in</button>
+            <div class="text-center mb-2" style="font-size:0.97rem;">
+                Don’t have an account? <a href="/Home/Register" style="color:#3399ff;">Sign up</a>
+            </div>
+        </form>
+    </div>
+</div>

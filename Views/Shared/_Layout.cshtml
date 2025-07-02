@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -36,7 +37,11 @@
                            placeholder="Search kits..."
                            style="width: 190px; background:#FFF; border:2px solid #E4DFDF; color:#5A250F;" />
 
-                    @if (User.Identity.IsAuthenticated)
+                    @{
+                        var username = Context.Session.GetString("Username");
+                    }
+
+                    @if (!string.IsNullOrEmpty(username))
                     {
                         <!-- Profile picture if logged in -->
                         <a href="/Profile">
@@ -46,60 +51,50 @@
                     else
                     {
                         <!-- Single Login/Sign up button if not logged in -->
-                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#loginModal"
-                                style="background:#A3D86B; color:#5A250F; border:none;">
+                        <a class="btn btn-success"
+                           style="background:#A3D86B; color:#5A250F; border:none;"
+                           asp-controller="Home" asp-action="Login">
                             Login / Sign up
-                        </button>
+                        </a>
                     }
+
                 </div>
 
         </nav>
 
-        <!-- Login Modal -->
-        <div class="modal fade" id="loginModal" tabindex="-1">
+      
+
+        <!-- Forgot Password Modal -->
+        <div class="modal fade" id="forgotModal" tabindex="-1" aria-hidden="true" style="background:rgba(0,0,0,0.45);">
             <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content rounded-4">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Login to SweeTimpla</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <div class="modal-content sweetimpla-modal px-4 py-3" style="border-radius: 20px; border: none; max-width: 400px; margin:auto;">
+                    <!-- Close Button -->
+                    <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close" style="z-index:2;"></button>
+                    <!-- Logo -->
+                    <div class="text-center mb-2">
+                        <img src="/images/LogoName.png" alt="SweeTimpla" style="height:48px; margin-bottom: 0.3rem;">
                     </div>
-                    <div class="modal-body">
-                        <input type="email" class="form-control mb-2" placeholder="Email">
-                        <input type="password" class="form-control mb-2" placeholder="Password">
-                        <button class="btn btn-success w-100" style="background:#A3D86B; color:#5A250F; border:none;">Login</button>
-                    </div>
-                    <div class="modal-footer">
-                        <span>Don’t have an account?</span>
-                        <button class="btn btn-link p-0" data-bs-target="#signupModal" data-bs-toggle="modal" data-bs-dismiss="modal">Sign up</button>
+                    <div class="sweetimpla-divider mb-3"></div>
+                    <h2 class="fw-bold text-center mb-2" style="color:#A3D86B; font-size:2rem;">Forgot Password</h2>
+                    <p class="text-center mb-4">
+                        We'll email you a link to reset your password.
+                    </p>
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label" for="forgot-email" style="font-size: 0.98rem;">Email</label>
+                            <input type="email" class="form-control" id="forgot-email" placeholder="Enter your email" style="background:#f5f5f5; border-radius:10px;">
+                        </div>
+                        <button type="submit" class="btn w-100 mb-3" style="background:#A3D86B; color:#fff; border-radius:10px; font-weight:600;">Send me a password reset link</button>
+                    </form>
+                    <div class="text-center" style="font-size:0.97rem;">
+                        Remember your password?
+                        <a href="#" onclick="switchToLoginFromForgot(event)" style="color:#3399ff;">Sign In Here</a>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Sign up Modal -->
-        <div class="modal fade" id="signupModal" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content rounded-4">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Create your SweeTimpla account</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <input type="text" class="form-control mb-2" placeholder="Full Name">
-                        <input type="email" class="form-control mb-2" placeholder="Email">
-                        <input type="password" class="form-control mb-2" placeholder="Password">
-                        <button class="btn btn-success w-100" style="background:#A3D86B; color:#5A250F; border:none;">Sign up</button>
-                    </div>
-                    <div class="modal-footer">
-                        <span>Already have an account?</span>
-                        <button class="btn btn-link p-0" data-bs-target="#loginModal" data-bs-toggle="modal" data-bs-dismiss="modal">Login</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
     </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

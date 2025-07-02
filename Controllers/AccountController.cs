@@ -1,6 +1,8 @@
 ﻿using DIYFilipinoDessert.Models;
 using DIYFilipinoDessert.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
 
 namespace DIYFilipinoDessert.Controllers
 {
@@ -15,43 +17,64 @@ namespace DIYFilipinoDessert.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index() => View();
-
-        public IActionResult Register() => View();
+      
+        public IActionResult Login()
+        {
+            return View();
+        }
 
         [HttpPost]
-        public IActionResult Login(string username, string password)
+        public IActionResult Login(string Email, string Password)
         {
-            var user = _accountService.Authenticate(username, password);
+            if (string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Password))
+            {
+                ViewBag.ErrorMessage = "Please fill in all fields.";
+                return View();
+            }
+
+            var user = _accountService.Authenticate(Email, Password);
             if (user != null)
             {
                 HttpContext.Session.SetInt32("UserId", user.Id);
                 HttpContext.Session.SetString("Username", user.Username);
-                HttpContext.Session.SetString("UserRole", user.GetType().Name);
-
-                return Redirect(user.AccessInterface()); // polymorphic redirection
+                HttpContext.Session.SetString("UserRole", user.Role);
+                return Redirect(user.AccessInterface());
             }
 
-            ModelState.AddModelError("", "Invalid username or password.");
-            return View("Index");
+            ViewBag.ErrorMessage = "Invalid email or password.";
+            return View();
+        }
+
+     
+        public IActionResult Register()
+        {
+            return View();
         }
 
         [HttpPost]
-        public IActionResult Registration(Account account)
+        public IActionResult Register(RegisterViewModel registerModel)
         {
-            if (ModelState.IsValid)
-            {
-                var registered = _accountService.Register(account);
-                if (!registered)
-                {
-                    ModelState.AddModelError("", "Username or Email already exists.");
-                    return View("Register");
-                }
+            if (!ModelState.IsValid)
+                return View(registerModel);
 
-                return RedirectToAction("Index");
+            var exists = _accountService.UserExists(registerModel.Username, registerModel.Email);
+            if (exists)
+            {
+                ViewBag.ErrorMessage = "Username or Email already exists.";
+                return View(registerModel);
             }
-            return View(account);
+
+            var registered = _accountService.Register(registerModel);
+            if (!registered)
+            {
+                ViewBag.ErrorMessage = "Registration failed. Try again.";
+                return View(registerModel);
+            }
+
+            TempData["SuccessMessage"] = "Registration successful! Please log in.";
+            return RedirectToAction("Login");
         }
+
 
         public IActionResult Profile(string username, string password)
         {
