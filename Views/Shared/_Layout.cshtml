@@ -26,16 +26,19 @@
                         <li class="nav-item"><a class="nav-link" asp-controller="BuildYourOwn" asp-action="Index">Build Your Own</a></li>
                         <li class="nav-item"><a class="nav-link" asp-controller="About" asp-action="Index">About</a></li>
                         <li class="nav-item"><a class="nav-link" asp-controller="Cart" asp-action="Index">Cart</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Orders" asp-action="Index">Orders</a></li>
                     </ul>
                 </div>
-
                 <!-- Right Side: Search and Auth/Profile -->
-                <div class="d-flex align-items-center gap-3">
-                    <!-- Search textbox always visible -->
-                    <input type="text"
-                           class="form-control"
-                           placeholder="Search kits..."
-                           style="width: 190px; background:#FFF; border:2px solid #E4DFDF; color:#5A250F;" />
+                <div class="d-flex align-items-center gap-3 flex-shrink-0">
+                    <div class="sweetimpla-search-group me-2">
+                        <input type="text"
+                               class="sweetimpla-search-input"
+                               placeholder="Search kits..." />
+                        <span class="sweetimpla-search-icon">
+                            <i class="bi bi-search"></i>
+                        </span>
+                    </div>
 
                     @{
                         var username = Context.Session.GetString("Username");

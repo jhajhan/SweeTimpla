@@ -14,7 +14,7 @@
                 <h1 class="display-3 fw-bold mb-3" style="color:#222;">
                     <span style="color:#A3D86B;">SweeTimpla</span> Brings You Home
                 </h1>
-                <p class="lead mb-4" style="color: #5A250F;">
+                <p class="lead mb-4" style="color: #555555;">
                     Here you’ll find all the best quality and fun Filipino dessert kits to satisfy your sweet cravings.
                 </p>
                 <div class="d-flex gap-3 justify-content-lg-start justify-content-center flex-wrap">
@@ -37,8 +37,7 @@
 
 
 <!-- Featured Kits -->
-<div class="container py-5">
-    <h2 class="text-center fw-bold mb-4" style="color: #5A250F;">Featured Dessert Kits</h2>
+    <h2 class="text-center fw-bold mb-4" style="color: #5A250F; padding-bottom: 20px;">Featured Dessert Kits</h2>
     <div class="row justify-content-center">
         @foreach (var kit in Model)
         {
@@ -48,15 +47,12 @@
                     <div class="card-body text-center">
                         <h5 class="card-title" style="color: #5A250F;">@kit.Name Kit</h5>
                         <p style="color: #5A250F;">₱@kit.Price</p>
-                        <a href="#" class="btn btn-outline-success"
-                           style="border-color: #89FF9F; color: #5A250F;">Buy Now</a>
+                        <a href="#" class="btn btn-outline-success buy-now-btn">Buy Now</a>
                     </div>
                 </div>
             </div>
-}
-
+        }
     </div>
-</div>
 
 <!-- Why Choose Us -->
 <div class="container py-5" style="background-color: #FFE3A8;">
