@@ -16,7 +16,7 @@ namespace DIYFilipinoDessert.Services
         public IEnumerable<Order> GetAllOrders()
         {
             var orders = _context.Orders
-                .Include(o => o.Items)
+                .Include(o => o.OrderItems)
                 .ThenInclude(oi => oi.DessertKit)
                 .ToList();
             if (orders == null || !orders.Any()) throw new Exception("No orders found");

@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public int DessertKitId { get; set; } // Assuming a cart is associated with a specific dessert kit
-        public DessertKit DessertKit { get; set; } // Navigation property
+        public DessertKit? DessertKit { get; set; } // Navigation property
         public int UserId { get; set; } // Assuming a user can have only one cart
 
         public int Quantity { get; set; } = 1; // Default quantity is 1

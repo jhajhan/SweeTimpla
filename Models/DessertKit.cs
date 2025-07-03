@@ -23,6 +23,7 @@ namespace DIYFilipinoDessert.Models
         public string ImageUrl { get; set; } = string.Empty;
         public decimal Price { get; set; }
         public string? Instructions { get; set; } 
+        public string? Description { get; set; } = string.Empty;
         public int? Quantity { get; set; }
         public bool IsFeatured { get; set; } = false;
         // Navigation property for related recipes

@@ -1,4 +1,4 @@
-﻿@{
+﻿﻿@{
     ViewData["Title"] = "Register";
 }
 
@@ -13,17 +13,13 @@
 }
 
 
-<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh; background: rgba(0,0,0,0.45);">
-    <div class="modal-content sweetimpla-modal px-4 py-3" style="border-radius: 20px; border: none; max-width: 400px;">
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="modal-content sweetimpla-modal px-4 py-3" style="border-radius: 20px; border: 2px solid #A3D86B; max-width: 400px;">
         <!-- Close Button -->
         <a href="/" class="btn-close position-absolute top-0 end-0 m-3" aria-label="Close" style="z-index:2;"></a>
 
-        <!-- Logo -->
-        <div class="text-center mb-2">
-            <img src="/images/LogoName.png" alt="SweeTimpla" style="height:48px; margin-bottom: 0.3rem;">
-        </div>
-        <div class="sweetimpla-divider mb-3"></div>
         <h2 class="fw-bold text-center mb-3" style="color:#A3D86B; font-size:2rem;">Sign Up</h2>
+        <div class="sweetimpla-divider mb-3"></div>
 
         <form id="signUpForm" method="post" action="/Home/Register">
             <div class="mb-3">
@@ -52,7 +48,7 @@
 
             <div class="mb-3 d-flex align-items-center" style="font-size:0.95rem;">
                 <input type="checkbox" id="acceptTerms" name="acceptTerms" style="accent-color: #A3D86B; margin-right: 6px;">
-                <label for="acceptTerms">I accept the <a href="#">Terms</a> & <a href="#">Privacy</a></label>
+                <label for="acceptTerms">I have read and accept the <a href="#" style="color:#3399ff;">Terms & Conditions</a> and <a href="#" style="color:#3399ff;">Privacy Policy</a></label>
             </div>
 
             <button type="submit" class="btn w-100 mb-3" style="background:#A3D86B; color:#fff; border-radius:10px; font-weight:600; font-size:1.05rem;">Sign up</button>

@@ -4,8 +4,23 @@
     ViewData["Title"] = "DessertKits";
 }
 
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <div>@error.ErrorMessage</div>
+        }
+    </div>
+}
 
-   
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
 
     <!-- =================================================== Kits Section ================================================== -->
     <section id="Kits" class="kits-section">
@@ -29,7 +44,7 @@
                 <div class="kit-card" data-key="@kit.Name.ToLower()">
                     <img src="@kit.ImageUrl" alt="@kit.Name" />
                     <h3>@kit.Name</h3>
-                    <h4>Steamed rice cakes that are slightly sweet and fluffy, often served with cheese or salted egg on top — a classic merienda favorite. </h4>
+                    <h4>@kit.Description </h4>
                     <span class="price">₱@kit.Price</span>
                  <button class="view-details" onclick="openKitDetails(@kit.Id)">View Details</button>
 
@@ -39,17 +54,22 @@
         </div>
 
         <!-- Kit Details Modal -->
+    <!-- Kit Details Modal -->
     <div id="kit-details-modal" class="kit-modal hidden">
         <div class="kit-modal-content">
             <span class="close-modal" onclick="closeKitDetails()">&times;</span>
-            <h3 id="kit-name"></h3> <!-- ✅ this must exist -->
-            <p id="kit-includes"><strong>What's included:</strong></p> <!-- ✅ -->
-            <p id="kit-tools"><strong>Tools needed:</strong></p> <!-- ✅ -->
-            <p id="kit-prep"></p> <!-- ✅ -->
-            <span class="price" id="kit-price"></span> <!-- ✅ -->
-            <button class="add-to-cart">Add to Cart</button>
+            <h3 id="kit-name"></h3>
+            <p id="kit-includes"><strong>What's included:</strong></p>
+            <p id="kit-tools"><strong>Tools needed:</strong></p>
+            <p id="kit-prep"></p>
+            <span class="price" id="kit-price"></span>
+
+            <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                <input type="hidden" name="dessertkitId" id="kit-id"/>
+                <input type="hidden" name="price" id="kit-price-value"/>
+                <button type="submit" class="add-to-cart">Add to Cart</button>
+            </form>
         </div>
     </div>
-
 
     </section>

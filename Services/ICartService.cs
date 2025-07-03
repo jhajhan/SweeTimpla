@@ -10,6 +10,6 @@ namespace DIYFilipinoDessert.Services
         void AddToCart(Cart cart);
         void RemoveFromCart(int cartItemId);
         void RemoveSelectedItems(List<int> itemIds);
-        void UpdateCartItem(int cartItemId, int quantity);
+        void UpdateCartItem(int cartItemId, int delta);
     }
 }

@@ -8,7 +8,6 @@ namespace DIYFilipinoDessert.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         public DbSet<DessertKit> DessertKits { get; set; }
-        public DbSet<Recipe> RecipeSteps { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
 

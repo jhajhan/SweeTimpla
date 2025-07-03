@@ -1,4 +1,33 @@
-﻿
+﻿@model IEnumerable<DIYFilipinoDessert.Models.Cart>
+
+
+@{
+    ViewData["Title"] = "Cart";
+	decimal subtotal = 0;
+}
+
+@* Place this just inside your checkout form, or near the top of your checkout modal/page *@
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger" role="alert">
+        <strong>Please fix the following errors:</strong>
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
 
     <!-- =================================================== Cart Section ================================================ -->
     <section id="Cart" class="cart-section">
@@ -6,58 +35,127 @@
         <div class="cart-container">
 
             <div class="cart-main">
-                <!-- Cart Table -->
                 <div class="cart-table-container">
                     <table class="cart-table">
                         <thead>
                             <tr>
+                                <th>Select</th>
                                 <th>Item</th>
+                                <th>Toppings</th>
+                                <th>Extras</th>
+                                <th>Notes</th>
                                 <th>Price</th>
                                 <th>Quantity</th>
                                 <th>Total</th>
                                 <th>Remove</th>
                             </tr>
                         </thead>
-                        <tbody></tbody>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                var total = item.Price * item.Quantity;
+                                subtotal += total;
+                                <tr>
+                                    <td>
+                                    
+                                        <input value="@(item.Id)" type="checkbox" class="cart-select" data-total="@((item.Price * item.Quantity).ToString("0.00"))" checked />
+                                   
+
+                                    </td>
+                                    <td class="item-name">@item.DessertKit?.Name</td>
+                                    <td class="item-toppings">@(string.IsNullOrWhiteSpace(item.Toppings) ? "No toppings selected" : item.Toppings)</td>
+                                    <td class="item-extras">@(string.IsNullOrWhiteSpace(item.Extras) ? "No extras selected" : item.Extras)</td>
+                                    <td class="item-notes">@(string.IsNullOrWhiteSpace(item.Notes) ? "No notes provided" : item.Notes)</td>
+                                <td class="item-price">@($"₱{item.Price:0.00}")</td>
+                                    <td>
+                                        <form asp-controller="Cart" asp-action="UpdateQuantity" method="post">
+                                            <input type="hidden" name="Id" value="@item.Id" />
+                                            <div class="quantity-control">
+                                                <button type="submit" name="action" value="decrease">-</button>
+                                                <span class="quantity">@item.Quantity</span>
+                                                <button type="submit" name="action" value="increase">+</button>
+                                            </div>
+                                        </form>
+                                    </td>
+                                    <td>@($"₱{total:0.00}")</td>
+                                    <td>
+                                        <form asp-controller="Cart" asp-action="RemoveFromCart" method="post">
+                                            <input type="hidden" name="Id" value="@item.Id" />
+                                            <button type="submit" class="remove-btn">Remove</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
                     </table>
                 </div>
             </div>
 
             <!-- Cart Summary -->
             <div class="cart-summary">
-                <p><strong>Subtotal:</strong> ₱0</p>
-                <p><strong>Shipping:</strong> ₱0</p>
-                <p><strong>Total:</strong> <span id="cartTotal">₱0</span></p>
+                <p><strong>Subtotal:</strong> ₱<span id="cart-subtotal">0.00</span></p>
+                <p><strong>Shipping:</strong> ₱<span id="cart-shipping">38.00</span></p>
+                <p><strong>Total:</strong> <span id="cart-total">₱0.00</span></p>
                 <button class="checkout-btn" onclick="openModal()">Proceed to Checkout</button>
             </div>
-        </div>
+
+   
+
+	</div>
+
+
 
         <!-- MODAL for Delivery Info -->
+    <form id="checkout-form" method="post" asp-controller="Order" asp-action="ConfirmCheckout">
         <div id="checkoutModal" class="modal">
             <div class="modal-content">
                 <span class="close-btn" onclick="closeModal()">&times;</span>
                 <h3>Delivery Information</h3>
-                <input type="text" placeholder="Full Name" required>
-                <input type="text" placeholder="Address" required>
-                <input type="text" placeholder="Contact Number (e.g., 09164524332)" required>
-                <select id="paymentMethod" onchange="handlePaymentChange()">
+
+                <input type="text" name="FullName" placeholder="Full Name" required>
+                <input type="text" name="ShippingAddress" placeholder="Address" required>
+                <input type="text" name="ContactNumber" placeholder="Contact Number (e.g., 09164524332)" required>
+
+                <select name="PaymentMethod" id="paymentMethod" onchange="handlePaymentChange()" required>
                     <option value="">Select Payment Method</option>
                     <option value="cod">Cash on Delivery</option>
                     <option value="gcash">GCash</option>
                 </select>
 
-                <!-- QR Code (Initially Hidden) -->
                 <div id="gcashQR" class="qr-container" style="display: none;">
                     <p><strong>Scan the GCash QR code to pay:</strong></p>
                     <img src="image/gcash.jpg" alt="GCash QR Code" class="qr-image" />
                 </div>
 
-                <!-- Total Price Display -->
-                <p id="modalTotalPrice" class="total-price-display"><strong>Total Price: </strong>₱0</p>
+                <!-- Hidden container to store selected cart item IDs -->
+                <div id="selected-cart-ids"></div>
 
-                <button class="confirm-btn" onclick="confirmOrder()">Confirm Order</button>
+
+                <!-- Dynamically added cart item IDs -->
+                <div id="modal-checkout-summary" class="checkout-review">
+                    <h4>Review Your Order</h4>
+                    <table style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th style="text-align:left;">Item</th>
+                                <th style="text-align:right;">Qty</th>
+                                <th style="text-align:right;">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody id="checkout-items-tbody">
+                            <!-- JS will fill this in -->
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <p id="modalTotalPrice" class="total-price-display"><strong>Total Price: </strong>₱<span id="modal-total-value">0</span></p>
+
+                <button type="submit" class="confirm-btn">Confirm Order</button>
             </div>
         </div>
+    </form>
+
 
         <!-- MODAL: Order Instructions -->
         <div id="instructionsModal" class="modal">

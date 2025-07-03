@@ -196,6 +196,10 @@ let cart = [];
 
                     document.getElementById("kit-price").innerText = `₱${data.price}`;
 
+                    // ✅ Set hidden inputs for form submission
+                    document.getElementById("kit-id").value = kitId;
+                    document.getElementById("kit-price-value").value = parseFloat(data.price);
+
 
                     // Show the modal
                     document.getElementById("kit-details-modal").classList.remove("hidden");
@@ -256,79 +260,210 @@ function showAddedMessage(message) {
 
 //================================================================================== Cart Functionality =================================================================================
 // render cart items
-function renderCart() {
-    const tbody = document.querySelector('.cart-table tbody');
-    tbody.innerHTML = '';
 
-    // ✅ Get latest cart data from localStorage
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    document.addEventListener("DOMContentLoaded", function () {
+    const shippingFee = 38;
+    const subtotalSpan = document.getElementById("cart-subtotal");
+    const totalSpan = document.getElementById("cart-total");
+    const selectAll = document.getElementById("select-all");
 
-    let subtotal = 0;
+    function updateTotals() {
+        let subtotal = 0;
+        document.querySelectorAll(".cart-select").forEach(cb => {
+            if (cb.checked) {
+                const itemTotal = parseFloat(cb.dataset.total) || 0;
+    subtotal += itemTotal;
+            }
+        });
 
-    cart.forEach((item, i) => {
-        const total = item.price * item.quantity;
-        subtotal += total;
+    const total = subtotal + shippingFee;
+    subtotalSpan.textContent = subtotal.toFixed(2);
+    totalSpan.textContent = `₱${total.toFixed(2)}`;
+    }
 
-        tbody.insertAdjacentHTML('beforeend', `
-      <tr>
-        <td>${item.name}</td>
-        <td>₱${item.price}</td>
-        <td>
-          <div class="quantity-control">
-            <button onclick="changeQuantity(${i}, -1)">-</button>
-            <span class="quantity">${item.quantity}</span>
-            <button onclick="changeQuantity(${i}, 1)">+</button>
-          </div>
-        </td>
-        <td>₱${total}</td>
-        <td>
-          <button class="remove-btn" onclick="removeItem(${i})">Remove</button>
-        </td>
-      </tr>
-    `);
+    document.querySelectorAll(".cart-select").forEach(cb => {
+        cb.addEventListener("change", updateTotals);
     });
 
-    document.querySelector('.cart-summary p:nth-child(1)').innerHTML = `<strong>Subtotal:</strong> ₱${subtotal}`;
-    const shipping = subtotal ? 50 : 0;
-    document.querySelector('.cart-summary p:nth-child(2)').innerHTML = `<strong>Shipping:</strong> ₱${shipping}`;
-    document.querySelector('.cart-summary p:nth-child(3)').innerHTML = `<strong>Total:</strong> <span id="cartTotal">₱${subtotal + shipping}</span>`;
-}
+    if (selectAll) {
+        selectAll.addEventListener("change", function () {
+            document.querySelectorAll(".cart-select").forEach(cb => cb.checked = selectAll.checked);
+            updateTotals();
+        });
+    }
 
-function changeQuantity(index, delta) {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    if (!cart[index]) return;
-    const newQty = cart[index].quantity + delta;
-    if (newQty < 1) return;
-    cart[index].quantity = newQty;
-    localStorage.setItem('cart', JSON.stringify(cart));
-    renderCart();
-}
-
-function removeItem(i) {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    cart.splice(i, 1);
-    localStorage.setItem('cart', JSON.stringify(cart));
-    renderCart();
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    renderCart();
+    updateTotals(); // Run on load
 });
+
+
+
+
+//function renderCart() {
+//    const tbody = document.querySelector('.cart-table tbody');
+//    tbody.innerHTML = '';
+
+//    // ✅ Get latest cart data from localStorage
+//    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+//    let subtotal = 0;
+
+//    cart.forEach((item, i) => {
+//        const total = item.price * item.quantity;
+//        subtotal += total;
+
+//        tbody.insertAdjacentHTML('beforeend', `
+//      <tr>
+//        <td>${item.name}</td>
+//        <td>₱${item.price}</td>
+//        <td>
+//          <div class="quantity-control">
+//            <button onclick="changeQuantity(${i}, -1)">-</button>
+//            <span class="quantity">${item.quantity}</span>
+//            <button onclick="changeQuantity(${i}, 1)">+</button>
+//          </div>
+//        </td>
+//        <td>₱${total}</td>
+//        <td>
+//          <button class="remove-btn" onclick="removeItem(${i})">Remove</button>
+//        </td>
+//      </tr>
+//    `);
+//    });
+
+//    document.querySelector('.cart-summary p:nth-child(1)').innerHTML = `<strong>Subtotal:</strong> ₱${subtotal}`;
+//    const shipping = subtotal ? 50 : 0;
+//    document.querySelector('.cart-summary p:nth-child(2)').innerHTML = `<strong>Shipping:</strong> ₱${shipping}`;
+//    document.querySelector('.cart-summary p:nth-child(3)').innerHTML = `<strong>Total:</strong> <span id="cartTotal">₱${subtotal + shipping}</span>`;
+//}
+
+//function changeQuantity(index, delta) {
+//    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+//    if (!cart[index]) return;
+//    const newQty = cart[index].quantity + delta;
+//    if (newQty < 1) return;
+//    cart[index].quantity = newQty;
+//    localStorage.setItem('cart', JSON.stringify(cart));
+//    renderCart();
+//}
+
+//function removeItem(i) {
+//    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+//    cart.splice(i, 1);
+//    localStorage.setItem('cart', JSON.stringify(cart));
+//    renderCart();
+//}
+
+//document.addEventListener('DOMContentLoaded', () => {
+//    renderCart();
+//});
+    function updateKitBuilder() {
+        let total = 0;
+
+    // Base Kit
+    const baseSelect = document.getElementById("base-select");
+    const selectedBase = baseSelect.options[baseSelect.selectedIndex];
+    const baseName = selectedBase.text;
+    const basePrice = parseFloat(selectedBase.dataset.price) || 0;
+    total += basePrice;
+
+    // Toppings
+    const toppings = [];
+    let toppingsTotal = 0;
+        document.querySelectorAll(".topping-option:checked").forEach(t => {
+        toppings.push(t.value);
+    toppingsTotal += parseFloat(t.dataset.price || 0);
+        });
+    total += toppingsTotal;
+
+    // Extras
+    const extras = [];
+    let extrasTotal = 0;
+        document.querySelectorAll(".extra-option:checked").forEach(e => {
+        extras.push(e.value);
+    extrasTotal += parseFloat(e.dataset.price || 0);
+        });
+    total += extrasTotal;
+
+    // Notes
+    const notes = document.getElementById("kit-notes").value;
+
+    // Update Price
+        document.getElementById("kit-total-price").innerText = `₱${total.toFixed(2)}`;
+     document.getElementById("hidden-kit-price").value = total.toFixed(2);
+
+
+        // Update Summary
+        document.getElementById("summary-base").innerText = baseName;
+        document.getElementById("summary-toppings").innerText = toppings.length ? toppings.join(", ") : "None";
+        document.getElementById("summary-extras").innerText = extras.length ? extras.join(", ") : "None";
+        document.getElementById("summary-notes").innerText = notes ? notes : "None";
+    }
+
+    // Attach listeners
+    document.addEventListener("DOMContentLoaded", () => {
+        updateKitBuilder(); // initial load
+
+        document.getElementById("base-select").addEventListener("change", updateKitBuilder);
+        document.querySelectorAll(".topping-option, .extra-option").forEach(el => {
+            el.addEventListener("change", updateKitBuilder);
+        });
+        document.getElementById("kit-notes").addEventListener("input", updateKitBuilder);
+
+
+    });
+
+
 
 
 /*======================================================================== Delivery Information Functionality =================================================================================*/
 
 // confirm modal
 function openModal() {
-    document.getElementById('checkoutModal').style.display = 'block';
+    const tbody = document.getElementById('checkout-items-tbody');
+    tbody.innerHTML = "";
 
-    // Read the total price from the correct span
-    const totalElement = document.getElementById('cartTotal');
-    const totalAmount = totalElement ? totalElement.textContent : '₱0';
+    const checkboxes = document.querySelectorAll('.cart-select:checked');
+    let subtotal = 0;
 
-    // Set it inside the modal
-    document.getElementById('modalTotalPrice').innerHTML = `<strong>Total Price: </strong>${totalAmount}`;
+    checkboxes.forEach(cb => {
+        const row = cb.closest('tr');
+        const itemId = cb.value;
+        const name = row.querySelector('.item-name')?.innerText || "Unnamed";
+        const toppings = row.querySelector('.item-toppings')?.innerText || "No toppings";
+        const extras = row.querySelector('.item-extras')?.innerText || "No extras";
+        const notes = row.querySelector('.item-notes')?.innerText || "No notes";
+        const quantity = parseInt(row.querySelector('.quantity')?.innerText || "1");
+        const priceText = row.querySelector('.item-price')?.innerText?.replace("₱", "") || "0";
+        const price = parseFloat(priceText);
+        const itemTotal = price * quantity;
+        subtotal += itemTotal;
+
+        tbody.insertAdjacentHTML('beforeend', `
+            <tr>
+                <td style="text-align:left;">
+                    <strong>${name}</strong><br>
+                    <small>
+                        Toppings: ${toppings}<br>
+                        Extras: ${extras}<br>
+                        Notes: ${notes}
+                    </small>
+                    <input type="hidden" name="SelectedCartIds" value="${itemId}" />
+                </td>
+                <td style="text-align:right;">${quantity}</td>
+                <td style="text-align:right;">₱${itemTotal.toFixed(2)}</td>
+            </tr>
+        `);
+    });
+
+    const shipping = 38;
+    const total = subtotal + shipping;
+
+    document.getElementById("modalTotalPrice").innerHTML = `<strong>Total Price: </strong>₱${total.toFixed(2)}`;
+    document.getElementById("checkoutModal").style.display = "block";
 }
+
+
+
 
 function closeModal() {
     document.getElementById('checkoutModal').style.display = 'none';

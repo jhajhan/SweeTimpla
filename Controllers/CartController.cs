@@ -20,66 +20,57 @@ namespace DIYFilipinoDessert.Controllers
         }
 
         //This action will return the view for the Cart page
-        public IActionResult Index(int account_id)
+        public IActionResult Index()
         {
-            var loginCheck = IsUserLoggedIn();
-            if (loginCheck != null)
-                return loginCheck;
-            // Fetch the cart and the cart items for the given account_id
-            var cart = _cartService.GetCartByUserId(account_id);
-            return View(cart);
+            if (IsUserLoggedIn() is IActionResult redirect)
+                return redirect;
+
+            int userId = HttpContext.Session.GetInt32("UserId").GetValueOrDefault();
+
+            // Make sure this returns data
+            var cartItems = _cartService.GetCartByUserId(userId);
+
+            return View(cartItems); // Must return a List<Cart>
         }
+
 
         // This action will process adding an item to the cart
         [HttpPost]
-        public IActionResult AddToCartFromKits(int dessertKitId, decimal price)
+        public IActionResult AddToCart(CartViewModel model)
         {
-        
+            if (IsUserLoggedIn() is IActionResult redirect)
+                return redirect;
+
+            Console.WriteLine("Adding to cart: " + model.DessertKitId + ", Price: " + model.Price);
+
+            if (model.DessertKitId <= 0 || model.Price <= 0)
+            {
+                ModelState.AddModelError("", "Invalid kit or price.");
+                return View("Index"); // or return RedirectToAction with error TempData
+            }
 
             var cartItem = new Cart
             {
-                DessertKitId = dessertKitId,
                 UserId = HttpContext.Session.GetInt32("UserId").GetValueOrDefault(),
+                DessertKitId = model.DessertKitId,
                 Quantity = 1,
-                Price = price,
-                Toppings = null,
-                Extras = null,
-                Notes = null
-            };
-
-            _cartService.AddToCart(cartItem);  // ✅ Reusing the same service
-
-            return RedirectToAction("Index", "Cart");
-        }
-
-        [HttpPost]
-        public IActionResult AddToCartBuild(int kit_id, string[] toppings, string[] extras, string[] notes, decimal price)
-        {
-            IsUserLoggedIn();
-            string toppingsCsv = toppings != null ? string.Join(", ", toppings) : "";
-            string extrasCsv = extras != null ? string.Join(", ", extras) : "";
-
-            var cartItem = new Cart
-            {
-                UserId = HttpContext.Session.GetInt32("UserId").GetValueOrDefault(),
-                DessertKitId = kit_id,
-                Quantity = 1, // Default quantity is set to 1
-                Price = price,
-                Toppings = toppingsCsv,
-                Extras = extrasCsv,
-                Notes = notes != null ? string.Join(", ", notes) : ""
+                Price = model.Price,
+                Toppings = model.Toppings != null ? string.Join(", ", model.Toppings) : null,
+                Extras = model.Extras != null ? string.Join(", ", model.Extras) : null,
+                Notes = model.Notes != null ? string.Join(", ", model.Notes) : null
             };
 
             _cartService.AddToCart(cartItem);
 
-            return RedirectToAction("Index");
-
+            TempData["SuccessMessage"] = "Item added to cart!";
+            return RedirectToAction("Index", "Cart");
         }
 
+
         // This action will process removing an item from the cart
-        public IActionResult RemoveFromCart(int id)
+        public IActionResult RemoveFromCart(int Id)
         {
-            _cartService.RemoveFromCart(id);
+            _cartService.RemoveFromCart(Id);
             return RedirectToAction("Index");
         }
 
@@ -92,11 +83,14 @@ namespace DIYFilipinoDessert.Controllers
         }
 
         // This action will process updating the quantity of an item in the cart 
+
         [HttpPost]
-        public IActionResult UpdateCartItem(int id, int quantity)
+        public IActionResult UpdateQuantity(int Id, string action)
         {
-            _cartService.UpdateCartItem(id, quantity);
+            int delta = action == "increase" ? 1 : -1;
+            _cartService.UpdateCartItem(Id, delta);
             return RedirectToAction("Index");
         }
+
     }
 }
