@@ -1,6 +1,7 @@
 ﻿// Services/OrderService.cs
 using DIYFilipinoDessert.Data;
 using DIYFilipinoDessert.Models;
+using DIYFilipinoDessert.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace DIYFilipinoDessert.Services
@@ -14,49 +15,72 @@ namespace DIYFilipinoDessert.Services
             _context = context;
         }
 
+        public List<Order> GetOrders(int userId)
+        {
+
+            return _context.Orders
+           .Where(o => o.UserId == userId)
+           .Include(o => o.OrderItems)
+               .ThenInclude(oi => oi.DessertKit) // include DessertKit data
+           .ToList();
+        }
+
         public List<Order> GetAllOrders()
         {
             return _context.Orders
-                .Include(o => o.Items)
+                .Include(o => o.OrderItems)
                 .ThenInclude(oi => oi.DessertKit)
                 .ToList();
         }
 
-        public bool CreateOrderFromCart(int userId, int[] cartItemIds, string paymentMethod, string shippingAddress)
+        public string? GetInstructionFilePath(int dessertKitId)
         {
+            var dessertKit = _context.DessertKits
+                .FirstOrDefault(d => d.Id == dessertKitId);
+
+            return dessertKit?.Instructions; // filename, e.g., "puto-bumbong.pdf"
+        }
+
+        public bool CreateOrderFromCart(int userId, OrderViewModel viewModel)
+        {
+            if (viewModel.SelectedCartIds == null || viewModel.SelectedCartIds.Length == 0)
+                return false;
+
             var cartItems = _context.Carts
                 .Include(c => c.DessertKit)
-                .Where(c => c.UserId == userId && cartItemIds.Contains(c.Id))
+                .Where(c => c.UserId == userId && viewModel.SelectedCartIds.Contains(c.Id))
                 .ToList();
 
-            if (cartItems == null || cartItems.Count == 0)
+            if (cartItems == null || !cartItems.Any())
                 return false;
 
             var order = new Order
             {
                 UserId = userId,
-                PaymentMethod = paymentMethod,
-                ShippingAddress = shippingAddress,
-                TotalAmount = cartItems.Sum(ci => ci.Price),
+                FullName = viewModel.FullName,
+                ShippingAddress = viewModel.ShippingAddress,
+                ContactNumber = viewModel.ContactNumber,
+                PaymentMethod = viewModel.PaymentMethod,
+                TotalAmount = cartItems.Sum(c => c.Price * c.Quantity) + 38, // Add shipping
                 OrderDate = DateTime.UtcNow,
-                Status = "Pending", // Default status
-                Items = cartItems.Select(ci => new OrderItem
+                OrderItems = cartItems.Select(c => new OrderItem
                 {
-                    DessertKitId = ci.DessertKitId,
-                    Toppings = ci.Toppings ?? "",
-                    Extras = ci.Extras ?? "",
-                    Notes = ci.Notes ?? "",
-                    Quantity = ci.Quantity,
-                    Price = ci.Price
+                    DessertKitId = c.DessertKitId,
+                    Quantity = c.Quantity,
+                    Price = c.Price,
+                    Toppings = c.Toppings,
+                    Extras = c.Extras,
+                    Notes = c.Notes
                 }).ToList()
             };
 
             _context.Orders.Add(order);
-            _context.Carts.RemoveRange(cartItems); // Clear selected items from cart
-            _context.SaveChanges();
+            _context.Carts.RemoveRange(cartItems);
 
+            _context.SaveChanges();
             return true;
         }
+
     }
 }
 

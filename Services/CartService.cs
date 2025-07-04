@@ -18,10 +18,11 @@ namespace DIYFilipinoDessert.Services
         public List<Cart> GetCartByUserId(int userId)
         {
             return _context.Carts
-            .Include(c => c.DessertKit)
-            .Where(c => c.UserId == userId)
-            .ToList();
+                .Include(c => c.DessertKit) // 👈 this is what makes DessertKit work!
+                .Where(c => c.UserId == userId)
+                .ToList();
         }
+
 
         // This method is used to get cart items by their IDs
         public List<Cart> GetCartByIds(int userId, int[] cartItemIds)
@@ -72,22 +73,25 @@ namespace DIYFilipinoDessert.Services
             _context.SaveChanges();
         }
 
-        public void UpdateCartItem(int cartItemId, int quantity)
+        public void UpdateCartItem(int cartItemId, int delta)
         {
             var cartItem = _context.Carts.Find(cartItemId);
             if (cartItem != null)
             {
-                if (quantity <= 0)
+                cartItem.Quantity += delta;
+
+                if (cartItem.Quantity <= 0)
                 {
                     _context.Carts.Remove(cartItem);
                 }
                 else
                 {
-                    cartItem.Quantity = quantity;
                     _context.Carts.Update(cartItem);
                 }
+
                 _context.SaveChanges();
             }
         }
+
     }
 }

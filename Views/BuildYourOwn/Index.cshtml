@@ -1,79 +1,88 @@
-﻿
-@model IEnumerable<DIYFilipinoDessert.Models.DessertKit>;
+﻿@model IEnumerable<DIYFilipinoDessert.Models.DessertKit>
 
 @{
     ViewData["Title"] = "BuildYourOwn";
+    decimal price = 0;
 }
 
-<div class="mb-4 text-center">
-    <h2 class="fw-bold d-inline-block ms-2" style="color:#5A250F; margin-top: 48px;">Build Your Own</h2>
-</div>
-<p class="lead text-center" style="color:#5A250F;">
-    Customize your own Filipino dessert kit.
-</p>
+<form asp-controller="Cart" asp-action="AddToCart" method="post">
+    <div class="mb-4 text-center">
+        <h2 class="fw-bold d-inline-block ms-2" style="color:#5A250F;">Build Your Own</h2>
+    </div>
+    <p class="lead text-center" style="color:#5A250F;">
+        Customize your own Filipino dessert kit.
+    </p>
 
-<h4 class="fw-bold mt-4" style="color:#222;">How it works:</h4>
-<ol class="mb-4 buildkit-steps" style="color:#5A250F; font-size:1.08rem;">
-    <li class="mb-2">
-        <b>Choose a base:</b> <br>
-        <select class="form-select mt-1 mb-2" style="max-width:300px;">
-        @foreach (var kit in Model)
-        {
-            <option value = "@kit.Id">@kit.Name</option>
-        }
-        </select>
-    </li>
-    <li class="mb-2">
-        <b>Select toppings:</b> <br>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="cheese" />
-            <label class="form-check-label" for="cheese">Cheese</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="ube" />
-            <label class="form-check-label" for="ube">Ube Halaya</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="latik" />
-            <label class="form-check-label" for="latik">Latik</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="coconut" />
-            <label class="form-check-label" for="coconut">Toasted Coconut</label>
-        </div>
-    </li>
-    <li class="mb-2">
-        <b>Optional extras:</b> <br>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="recipeCard" />
-            <label class="form-check-label" for="recipeCard">Printed recipe card</label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="tools" />
-            <label class="form-check-label" for="tools">Reusable measuring tools</label>
-        </div>
-    </li>
-    <li class="mb-2">
-        <b>Name or notes (optional):</b> <br>
-        <input class="form-control mt-1" style="max-width:400px;" type="text" placeholder="e.g., For Mom's Birthday" />
-    </li>
-</ol>
-<div class="mb-3" style="color:#5A250F;">
-    <strong>Price:</strong> <span>₱250</span>
-    <span class="text-muted">(Updates as you choose items)</span>
-</div>
-<div class="mb-3">
-    <button class="btn btn-success" style="background:#A3D86B; color:#5A250F; border:none;">
-        Confirm and Add to Cart
-    </button>
-</div>
-<div class="alert alert-info rounded-3 text-center" style="background:#F0F0F0; color:#5A250F; border:none;">
-    <strong>Your Kit Summary:</strong>
-    <ul class="mb-0" style="color:#5A250F; list-style:none;">
-        <li>Base: <span class="fw-bold">Suman</span></li>
-        <li>Toppings: <span class="fw-bold">Cheese, Ube Halaya</span></li>
-        <li>Extras: <span class="fw-bold">Printed recipe card</span></li>
-        <li>Notes: <span class="fw-bold">For Mom's Birthday</span></li>
-    </ul>
-</div>
+    <h4 class="fw-bold mt-4" style="color:#222;">How it works:</h4>
+    <ol class="mb-4 buildkit-steps" style="color:#5A250F; font-size:1.08rem;">
+        <li class="mb-2">
+            <b>Choose a base:</b> <br>
+            <select id="base-select" name="DessertKitId" class="form-select mt-1 mb-2" style="max-width:300px;">
+                @foreach (var kit in Model)
+                {
+                    <option value="@kit.Id" data-price="@kit.Price">@kit.Name</option>
+                }
+            </select>
 
+        </li>
+
+        <li class="mb-2">
+            <b>Select toppings:</b> <br>
+            <div class="form-check form-check-inline">
+                <input name="Toppings" class="form-check-input topping-option" type="checkbox" id="cheese" value="Cheese" data-price="50" />
+                <label class="form-check-label" for="cheese">Cheese</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input name="Toppings" class="form-check-input topping-option" type="checkbox" id="ube" value="Ube Halaya" data-price="40" />
+                <label class="form-check-label" for="ube">Ube Halaya</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input name="Toppings" class="form-check-input topping-option" type="checkbox" id="latik" value="Latik" data-price="30" />
+                <label class="form-check-label" for="latik">Latik</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input name="Toppings" class="form-check-input topping-option" type="checkbox" id="coconut" value="Toasted Coconut" data-price="20" />
+                <label class="form-check-label" for="coconut">Toasted Coconut</label>
+            </div>
+        </li>
+
+        <li class="mb-2">
+            <b>Optional extras:</b> <br>
+            <div class="form-check">
+                <input name="Extras" class="form-check-input extra-option" type="checkbox" id="recipeCard" value="Printed Recipe Card" data-price="30" />
+                <label class="form-check-label" for="recipeCard">Printed recipe card</label>
+            </div>
+            <div class="form-check">
+                <input name="Extras" class="form-check-input extra-option" type="checkbox" id="tools" value="Reusable Measuring Tools" data-price="50" />
+                <label class="form-check-label" for="tools">Reusable measuring tools</label>
+            </div>
+        </li>
+
+        <li class="mb-2">
+            <b>Name or notes (optional):</b> <br>
+            <input class="form-control mt-1" id="kit-notes" name="Notes" style="max-width:400px;" type="text" placeholder="e.g., For Mom's Birthday" />
+        </li>
+    </ol>
+
+    <div class="mb-3" style="color:#5A250F;">
+        <strong>Price:</strong> <span id="kit-total-price">₱0.00</span>
+        <input type="hidden" name="Price" id="hidden-kit-price" value="0" />
+        <span class="text-muted">(Updates as you choose items)</span>
+    </div>
+
+    <div class="mb-3">
+        <button type="submit" class="btn btn-success" style="background:#A3D86B; color:#5A250F; border:none;">
+            Confirm and Add to Cart
+        </button>
+    </div>
+
+    <div class="alert alert-info rounded-3 text-center" style="background:#F0F0F0; color:#5A250F; border:none;">
+        <strong>Your Kit Summary:</strong>
+        <ul class="mb-0" id="kit-summary" style="color:#5A250F; list-style:none;">
+            <li>Base: <span class="fw-bold" id="summary-base">-</span></li>
+            <li>Toppings: <span class="fw-bold" id="summary-toppings">-</span></li>
+            <li>Extras: <span class="fw-bold" id="summary-extras">-</span></li>
+            <li>Notes: <span class="fw-bold" id="summary-notes">-</span></li>
+        </ul>
+    </div>
+</form>
