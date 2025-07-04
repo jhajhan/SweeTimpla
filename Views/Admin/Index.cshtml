@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Admin";
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Home - SweeTimpla</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/admin.css" />
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <div class="logo">
+            <h1>SweeTimpla</h1>
+        </div>
+        <ul>
+            <li><a asp-controller="Admin" asp-action="Index">Home</a></li>
+            <li><a asp-controller="Admin" asp-action="ManageOrders">Manage Orders</a></li>
+            <li><a asp-controller="Admin" asp-action="ManageKits">Manage Kits</a></li>
+            <li>
+                <form method="post" asp-controller="Home" asp-action="Logout" onsubmit="return confirmLogout(event, this)" style="display: inline;">
+                    <button type="submit" class="nav-link logout-link">Logout</button>
+                </form>
+            </li>
+        </ul>
+
+    </nav>
+
+    <!-- Admin Home Buttons Section -->
+    <section style="padding: 60px; text-align: center;">
+        <h2 style="font-size: 32px; color: #5A250F; margin-bottom: 40px;">Welcome, Admin!</h2>
+        <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+            <a asp-controller="Admin" asp-action="ManageOrders" class="admin-btn">📋 Manage Orders</a>
+            <a a asp-controller="Admin" asp-action="ManageKits" class="admin-btn">🍰 Dessert Kit Management</a>
+        </div>
+    </section>
+
+
+    <script src="~/js/admin.js"></script>
+
+</body>
+</html>

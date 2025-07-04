@@ -61,6 +61,7 @@ namespace DIYFilipinoDessert.Services
                 ShippingAddress = viewModel.ShippingAddress,
                 ContactNumber = viewModel.ContactNumber,
                 PaymentMethod = viewModel.PaymentMethod,
+                PaymentStatus = "Unpaid", // Default status
                 TotalAmount = cartItems.Sum(c => c.Price * c.Quantity) + 38, // Add shipping
                 OrderDate = DateTime.UtcNow,
                 OrderItems = cartItems.Select(c => new OrderItem

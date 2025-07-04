@@ -11,6 +11,7 @@
         public string FullName { get; set; } // Full name of the customer
 
         public string PaymentMethod { get; set; }
+        public string PaymentStatus { get; set; } = "Unpaid";// e.g., "Paid", "Unpaid", "Refunded"
 
         public decimal TotalAmount { get; set; } // Total amount for the order
 

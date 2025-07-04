@@ -89,6 +89,13 @@ public class HomeController : Controller
         return View();
     }
 
+    public IActionResult Logout()
+    {
+        HttpContext.Session.Clear();
+        TempData["SuccessMessage"] = "You have been logged out successfully.";
+        return RedirectToAction("Index");
+    }
+
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

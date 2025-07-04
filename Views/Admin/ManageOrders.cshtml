@@ -1,0 +1,162 @@
+﻿@model IEnumerable<DIYFilipinoDessert.Models.Order>
+
+@{
+    ViewData["Title"] = "Manage Orders";
+    Layout = null;
+    var counter = 1;
+    int totalOrders = Model.Count();
+    int pendingCount = Model.Count(o => o.Status == "Pending");
+    int processedCount = Model.Count(o => o.Status == "Processed");
+}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Home - SweeTimpla</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/admin.css" />
+    <!-- Add in your <head> or just before </body> -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav>
+        <div class="logo">
+            <h1>SweeTimpla</h1>
+        </div>
+        <ul>
+            <li><a asp-controller="Admin" asp-action="Index">Home</a></li>
+            <li><a asp-controller="Admin" asp-action="ManageOrders">Manage Orders</a></li>
+            <li><a asp-controller="Admin" asp-action="ManageKits">Manage Kits</a></li>
+            <li>
+                <form method="post" asp-controller="Home" asp-action="Logout" onsubmit="return confirmLogout(event, this)" style="display: inline;">
+                    <button type="submit" class="nav-link logout-link">Logout</button>
+                </form>
+            </li>
+        </ul>
+
+    </nav>
+
+    @* Validation Errors *@
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="temp-message temp-message-error">
+            <strong>⚠️ Please fix the following errors:</strong>
+            <ul>
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
+
+    @* Success Message from TempData *@
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="temp-message temp-message-success">
+            ✅ @TempData["SuccessMessage"]
+        </div>
+    }
+
+
+    <!-- Order Dashboard -->
+    <section class="order-dashboard">
+        <h2>Hello, Admin!</h2>
+
+        <div class="order-summary-row">
+            <div><strong>📦 Total Orders:</strong> <span id="totalOrders">@totalOrders</span></div>
+            <div><strong>⏳ Pending:</strong> <span id="pendingCount">@pendingCount</span></div>
+            <div><strong>✅ Processed:</strong> <span id="processedCount">@processedCount</span></div>
+        </div>
+
+        <table class="order-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Customer</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Payment Method</th>
+                    <th>Payment Status</th>
+                    <th>Total</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model)
+                {
+                    <tr>
+                        <td>@order.Id</td>
+                        <td>@order.FullName</td>
+                        <td>@order.OrderDate.ToString("yyyy-MM-dd")</td>
+                        <td class="status-cell">@order.Status</td>
+                        <td class="payment-cell">@order.PaymentMethod</td>
+                        <td class="paymentstatus-cell">@order.PaymentStatus</td>
+
+                        <td>₱@order.TotalAmount</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="edit-btn"
+                                        data-order-id="@order.Id"
+                                        data-order-status="@order.Status"
+                                        data-payment-status="@order.PaymentStatus">
+                                    Edit
+                                </button>
+                                <form asp-controller="Admin" asp-action="DeleteOrder" method="post" onsubmit="return confirmDelete(event, this)">
+                                    <input type="hidden" name="Id" value="@order.Id" />
+                                    <button type="submit" class="delete-btn">Delete</button>
+                                </form>
+
+                            </div>
+                        </td>
+                    </tr>
+
+					counter++;
+                }
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Order</h3>
+                <span class="close">&times;</span>
+            </div>
+            <form id="editForm" onsubmit="return confirmSave(event)" asp-controller ="Admin" asp-action="EditOrder" method="post">
+                <input type="hidden" id="editOrderId" name="Id" />
+                <div class="form-group">
+                    <label for="orderStatus">Order Status:</label>
+                    <select name="Status"id="orderStatus">
+                        <option value="Pending">Pending</option>
+                        <option value="Processed">Processed</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="paymentStatus">Payment Status:</label>
+                    <select name="PaymentStatus" id="paymentStatus">
+                        <option value="Unpaid">Unpaid</option>
+                        <option value="Paid">Paid</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" id="cancelEdit">Cancel</button>
+                    <button type="submit" class="btn-save" id="saveEdit">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="~/js/admin.js"></script>
+</body>
+</html>

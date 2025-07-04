@@ -709,4 +709,31 @@ function switchToLoginFromForgot(e) {
     document.querySelector('#loginSignupModal h2').innerText = 'Sign In';
 }
 
+function confirmRemoveFromCart(event, form) {
+    event.preventDefault();
+
+    if (typeof Swal !== 'undefined') {
+        Swal.fire({
+            title: 'Remove item?',
+            text: "This item will be removed from your cart.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#e74c3c',
+            cancelButtonColor: '#A3D86B',
+            confirmButtonText: 'Yes, remove it'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+        });
+    } else {
+        if (confirm('Are you sure you want to remove this item from your cart?')) {
+            form.submit();
+        }
+    }
+
+    return false;
+}
+
+
 

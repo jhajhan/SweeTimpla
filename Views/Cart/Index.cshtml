@@ -78,7 +78,7 @@
                                     </td>
                                     <td>@($"₱{total:0.00}")</td>
                                     <td>
-                                        <form asp-controller="Cart" asp-action="RemoveFromCart" method="post">
+                                        <form asp-controller="Cart" asp-action="RemoveFromCart" method="post" onsubmit="return confirmRemoveFromCart(event, this)">
                                             <input type="hidden" name="Id" value="@item.Id" />
                                             <button type="submit" class="remove-btn">Remove</button>
                                         </form>
