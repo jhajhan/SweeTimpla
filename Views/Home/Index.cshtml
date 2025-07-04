@@ -5,29 +5,31 @@
 }
 
 <!-- SweeTimpla Modern Hero Section: Side-by-side, Vertically Centered -->
-<div class="sweetimpla-hero w-100 d-flex align-items-center justify-content-center" style="min-height: 90vh;">
+<div class="sweetimpla-hero d-flex align-items-center" style="min-height: 90vh;">
     <div class="container-fluid px-0">
-        <div class="row align-items-center justify-content-center mx-0" style="min-height:70vh;">
+        <div class="row align-items-center mx-0" style="min-height:70vh;">
             <!-- Left: Text and buttons -->
-            <div class="col-lg-6 col-12 text-lg-start text-center px-4 px-lg-5 mb-4 mb-lg-0">
+            <div class="col-lg-6 col-12 text-lg-start text-center px-4 px-lg-5 mb-4 mb-lg-0 hero-text-col">
                 <p class="mb-2 fw-bold" style="color: #5A250F;">Hungry?</p>
                 <h1 class="display-3 fw-bold mb-3" style="color:#222;">
-                    <span style="color:#A3D86B;">SweeTimpla</span> Brings You Home
+                    <span style="color:#A3D86B;">SweeTimpla</span> <br>
+                    Brings You Home
                 </h1>
                 <p class="lead mb-4" style="color: #555555;">
-                    Here you’ll find all the best quality and fun Filipino dessert kits to satisfy your sweet cravings.
+                    Here you’ll find all the best quality and fun Filipino dessert kits <br> to satisfy your sweet cravings.
                 </p>
                 <div class="d-flex gap-3 justify-content-lg-start justify-content-center flex-wrap">
                     <a class="btn btn-lg btn-main" asp-controller="DessertKit" asp-action="Index">Order A Kit</a>
                     <a class="btn btn-lg btn-main" asp-controller="BuildYourOwn" asp-action="Index">Build Your Own Kit</a>
                 </div>
             </div>
-            <!-- Cupcake Hihi -->
+            <!--Cupcake Hihi
             <div class="col-lg-5 d-flex justify-content-center align-items-center px-3 px-lg-4 position-relative">
                 <img src="~/images/Cupcake.png"
                      alt="Cupcake"
                      style="width: 330px; max-width: 100%; height: auto; z-index:2; position:relative;" />
             </div>
+            -->
         </div>
     </div>
 </div>

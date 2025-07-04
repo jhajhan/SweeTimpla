@@ -66,6 +66,30 @@ body, header, .navbar, .custom-navbar {
     margin: 0 5px; /* Increase/decrease this value for more/less gap */
 }
 
+.sweetimpla-hero {
+    min-height: 90vh;
+    background: url('/images/MainBG.png') top right no-repeat;
+    background-size: contain; /* or use cover for full stretch */
+    background-color: #fff; /* fallback color */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+
+@media (max-width: 991px) {
+    .hero-bg-col {
+        min-height: 40vh;
+        background-size: cover;
+    }
+
+    .hero-text-col {
+        margin-bottom: 2rem;
+    }
+}
+
+
 .sweetimpla-hero .row {
     margin-left: 0 !important;
     margin-right: 0 !important;
@@ -180,7 +204,7 @@ body, header, .navbar, .custom-navbar {
     }
 }
 
-.card {
+.kit-card-container .card {
     height: 580px; /* Set to your preferred height */
     display: flex;
     flex-direction: column;
