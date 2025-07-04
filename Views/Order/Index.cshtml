@@ -1,34 +1,38 @@
 ﻿@model IEnumerable<DIYFilipinoDessert.Models.Order>
 
 @{
-    ViewData["Title"] = "Track Orders";
+ViewData["Title"] = "Track Orders";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/jali.css" />
 }
 
 <section id="trackOrder" class="track-order-section">
-    <h2 class="section-title">Track Your Order</h2>
+<h2 class="section-title">Track Your Order</h2>
 
-    <div class="order-grid">
-        @foreach (var order in Model)
-        {
-            foreach (var item in order.OrderItems)
-            {
-                <div class="order-card">
-                    <div class="order-image">
-                        <img src="@item.DessertKit.ImageUrl" alt="@item.DessertKit.Name" />
-                    </div>
-                    <div class="order-details">
-                        <p><strong>Dessert Kit:</strong> @item.DessertKit.Name</p>
-                        <p><strong>Date Placed:</strong> @order.OrderDate.ToString("MMMM dd, yyyy")</p>
-                        <p><strong>Total:</strong> ₱@order.TotalAmount</p>
-                        <p><strong>Payment Method:</strong> @order.PaymentMethod</p>
-                        <p><strong>Status:</strong> <span class="status @order.Status.ToLower()">@order.Status</span></p>
-                        <button class="download-btn" onclick="location.href='@Url.Action("DownloadInstructions", "Order", new { dessertKitId = item.DessertKit.Id })'">
-                            🍮Cooking Instructions
-                        </button>
-
-                    </div>
-                </div>
-            }
-        }
+<div class="order-grid">
+@foreach (var order in Model)
+{
+foreach (var item in order.OrderItems)
+{
+<div class="order-card">
+    <div class="order-image">
+        <img src="@item.DessertKit.ImageUrl" alt="@item.DessertKit.Name" />
     </div>
+    <div class="order-details">
+        <p><strong>Dessert Kit:</strong> @item.DessertKit.Name</p>
+        <p><strong>Date Placed:</strong> @order.OrderDate.ToString("MMMM dd, yyyy")</p>
+        <p><strong>Total:</strong> ₱@order.TotalAmount</p>
+        <p><strong>Payment Method:</strong> @order.PaymentMethod</p>
+        <p><strong>Status:</strong> <span class="status @order.Status.ToLower()">@order.Status</span></p>
+        <button class="download-btn" onclick="location.href='@Url.Action("DownloadInstructions", "Order", new { dessertKitId = item.DessertKit.Id })'">
+            🍮Cooking Instructions
+        </button>
+
+    </div>
+</div>
+}
+}
+</div>
 </section>

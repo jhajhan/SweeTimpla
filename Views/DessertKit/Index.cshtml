@@ -24,34 +24,41 @@
 
     <!-- =================================================== Kits Section ================================================== -->
     <section id="Kits" class="kits-section">
-        <h2 class="section-title">Our Dessert Kits</h2>
-
-        <!-- Filter Options -->
-        <div class="kit-filters">
-            <select id="filter-price">
-                <option value="all">All Prices</option>
-                <option value="under200">Below ₱200</option>
-                <option value="200to300">₱200 - ₱300</option>
-                <option value="above300">Above ₱300</option>
-            </select>
+        <div class="mb-4 text-center">
+        <h2 class="fw-bold d-inline-block ms-2" style="color:#5A250F; padding-top: 50px;">Our Dessert Kits</h2>
         </div>
 
-        <div class="kits-container">
+    <!-- Filter Options -->
+    <div class="kit-filters">
+        <select id="filter-price">
+            <option value="all">All Prices</option>
+            <option value="under200">Below ₱200</option>
+            <option value="200to300">₱200 - ₱300</option>
+            <option value="above300">Above ₱300</option>
+        </select>
+    </div>
 
-            <!-- 1 -->
-            @foreach (var kit in Model)
-            {
-                <div class="kit-card" data-key="@kit.Name.ToLower()">
-                    <img src="@kit.ImageUrl" alt="@kit.Name" />
-                    <h3>@kit.Name</h3>
-                    <h4>@kit.Description </h4>
-                    <span class="price">₱@kit.Price</span>
-                 <button class="view-details" onclick="openKitDetails(@kit.Id)">View Details</button>
-
-
+    <div class="row justify-content-center">
+        <!-- 1 -->
+        @foreach (var kit in Model)
+        {
+            <div class="col-md-3 mb-4">
+                <div class="card shadow-sm rounded-4">
+                    <div class="kit-card" data-key="@kit.Name.ToLower()">
+                        <img src="@kit.ImageUrl" class="card-img-top rounded-top-4" alt="@kit.Name" />
+                        <div class="card-body text-center">
+                            <h5 class="card-title" style="color: #5A250F;">@kit.Name</h5>
+                            <h4>@kit.Description</h4>
+                            <div class="mb-2">
+                                <span class="price">₱@kit.Price</span>
+                            </div>
+                            <button class="view-details" onclick="openKitDetails(@kit.Id)">View Details</button>
+                        </div>
+                    </div>
                 </div>
-            }
-        </div>
+            </div>
+        }
+    </div>
 
         <!-- Kit Details Modal -->
     <!-- Kit Details Modal -->
