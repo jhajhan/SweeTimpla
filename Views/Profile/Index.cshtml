@@ -1,0 +1,89 @@
+﻿@model DIYFilipinoDessert.Models.Account
+
+@{
+    ViewData["Title"] = "Profile Settings";
+}
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<!-- ================================================ profile setting ===========================================-->
+<section id="profile">
+    <div id="profile-settings">
+        <div class="profile-sidebar">
+            <img src="image/profile.jpg" class="profile-pic" alt="Profile Picture">
+            <h3 id="profile-username">@Model.Username</h3>
+
+            <ul class="settings-menu">
+                <li><a href="#" class="menu-link" data-section="edit-profile">Edit Profile</a></li>
+
+                <li>
+                    <form asp-controller="Home" asp-action="Logout" method="post" onsubmit="return confirmLogout(event, this)">
+                        <button type="submit" class="signout-btn">Sign Out</button>
+                    </form>
+                </li>
+            </ul>
+
+
+        </div>
+
+        <div class="profile-content">
+            <!-- Edit Profile Section -->
+            <div id="edit-profile" class="profile-section">
+                <h2 class="profile-heading">Profile Information</h2>
+                <form asp-action="EditDetails" asp-controller="Profile" method="post">
+                    <input type="hidden" name="Id" value="@Model.Id" />
+
+                    <label>Full Name</label>
+                    <input type="text" id="edit-username" name="FullName" value="@Model.Username" required>
+
+                    <label>Email</label>
+                    <input type="email" id="edit-email" name="Email" value="@Model.Email" required>
+
+                    <label>Registered Date</label>
+                    <input type="text" id="edit-registered" value="@Model.CreatedAt.ToString("yyyy-MM-dd")" disabled>
+
+                    <div class="update-cancel">
+                        <button type="submit" class="normal">Edit</button>
+                        <button type="button" class="normal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Password Settings Section -->
+            <div id="password-settings" class="profile-section">
+                <h2 class="profile-heading">Password Setting</h2>
+                <form asp-action="ChangePassword" asp-controller="Profile" method="post">
+                    <input type="hidden" name="Id" value="@Model.Id" />
+
+                    <label>Current Password</label>
+                    <div class="password-container">
+                        <input type="password" name="OldPassword" id="old-password" required>
+                        <ion-icon class="eye-icon" data-toggle="old-password" name="eye-outline"></ion-icon>
+                    </div>
+
+                    <label>New Password</label>
+                    <div class="password-container">
+                        <input type="password" name="NewPassword" id="new-password" required>
+                        <ion-icon class="eye-icon" data-toggle="new-password" name="eye-outline"></ion-icon>
+                    </div>
+
+                    <label>Confirm New Password</label>
+                    <div class="password-container">
+                        <input type="password" name="ConfirmPassword" id="confirm-password" required>
+                        <ion-icon class="eye-icon" data-toggle="confirm-password" name="eye-outline"></ion-icon>
+                    </div>
+
+                    <div class="update-cancel">
+                        <button type="submit" class="normal">Update Password</button>
+                        <button type="button" class="normal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+

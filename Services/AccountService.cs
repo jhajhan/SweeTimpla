@@ -58,9 +58,43 @@ namespace DIYFilipinoDessert.Services
         }
 
 
-        public Account GetAccount(string username, string password)
+        public Account GetAccount(int userId)
         {
-            return _context.Accounts.FirstOrDefault(a => a.Username == username && a.Password == password);
+            return _context.Accounts.Find(userId);
+        }
+
+        public bool EditDetails(EditDetailsViewModel model)
+        {
+            var account = _context.Accounts.Find(model.Id);
+            if (account == null)
+                return false;
+
+            account.Username = model.FullName;
+            account.Email = model.Email;
+
+            _context.Accounts.Update(account);
+            _context.SaveChanges();
+
+            return true;
+        }
+
+
+        public bool ChangePassword(ChangePasswordViewModel model)
+        {
+            var account = _context.Accounts.Find(model.Id);
+            if (account == null)
+                return false;
+
+            var hasher = new PasswordHasher<ChangePasswordViewModel>();
+            var result = hasher.VerifyHashedPassword(model, account.Password, model.OldPassword);
+
+            if (result != PasswordVerificationResult.Success)
+                return false;
+
+            account.Password = hasher.HashPassword(model, model.NewPassword);
+            _context.Accounts.Update(account);
+            _context.SaveChanges();
+            return true;
         }
 
         public bool UserExists(string email, string password)

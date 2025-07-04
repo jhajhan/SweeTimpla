@@ -760,5 +760,48 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+// ======================================================================== Profile Settings Functionality ========================================================================
+document.addEventListener('DOMContentLoaded', () => {
+    // Select only the profile menu links, not the form
+    
+
+    // Toggle password visibility
+    document.querySelectorAll('.eye-icon').forEach(icon => {
+        icon.addEventListener('click', function () {
+            const targetId = this.getAttribute('data-toggle');
+            const input = document.getElementById(targetId);
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                this.setAttribute('name', 'eye-off-outline');
+            } else {
+                input.type = 'password';
+                this.setAttribute('name', 'eye-outline');
+            }
+        });
+    });
+});
+
+function confirmLogout(event, form) {
+    event.preventDefault();
+
+    Swal.fire({
+        title: 'Log out?',
+        text: "Are you sure you want to log out?",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#A3D86B',
+        cancelButtonColor: '#ccc',
+        confirmButtonText: 'Yes, log out'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            form.submit();
+        }
+    });
+
+    return false;
+}
+
+
 
 

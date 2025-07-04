@@ -14,11 +14,11 @@ public class HomeController : Controller
     private readonly IDessertKitService _dessertKitService;
     private readonly IAccountService _accountService;
 
-    public HomeController (ApplicationDbContext context, ILogger<HomeController> logger)
+    public HomeController (IDessertKitService dessertKitService, IAccountService accountService)
     {
 
-        _dessertKitService = new DessertKitService(context);
-        _accountService = new AccountService(context);
+        _dessertKitService = dessertKitService;
+        _accountService = accountService;
     }
 
     public IActionResult Index()

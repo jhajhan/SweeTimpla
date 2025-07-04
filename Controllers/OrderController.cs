@@ -12,12 +12,12 @@ namespace DIYFilipinoDessert.Controllers
     {
     
         private readonly IOrderService _orderService;
-        private readonly ICartService _cartService;
 
-        public OrderController(ApplicationDbContext context)
+
+        public OrderController(IOrderService orderService)
         {
-            _orderService = new OrderService(context);
-            _cartService = new CartService(context);
+            _orderService = orderService;
+           
         }
 
         public IActionResult Index()

@@ -9,9 +9,9 @@ namespace DIYFilipinoDessert.Controllers
     public class AdminController: Controller
     {
         private readonly IAdminService _adminService;
-        public AdminController(ApplicationDbContext context)
+        public AdminController(IAdminService adminService)
         {
-            _adminService = new AdminService(context);
+            _adminService = adminService;
         }
         // This action will return the view for the Admin Dashboard
         public IActionResult Index()

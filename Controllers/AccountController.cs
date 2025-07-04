@@ -8,13 +8,13 @@ namespace DIYFilipinoDessert.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly ILogger<AccountController> _logger;
+      
         private readonly IAccountService _accountService;
 
-        public AccountController(IAccountService accountService, ILogger<AccountController> logger)
+        public AccountController(IAccountService accountService)
         {
             _accountService = accountService;
-            _logger = logger;
+       
         }
 
       
@@ -76,14 +76,7 @@ namespace DIYFilipinoDessert.Controllers
         }
 
 
-        public IActionResult Profile(string username, string password)
-        {
-            var account = _accountService.GetAccount(username, password);
-            if (account == null)
-                return NotFound();
-
-            return View(account);
-        }
+  
 
         public IActionResult Logout()
         {

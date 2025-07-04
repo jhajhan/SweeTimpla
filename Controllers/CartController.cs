@@ -11,12 +11,12 @@ namespace DIYFilipinoDessert.Controllers
     {
 
 
-        private readonly CartService _cartService;
+        private readonly ICartService _cartService;
 
-        public CartController(ApplicationDbContext context, ILogger<CartController> logger)
+        public CartController(ICartService cartService)
         {
 
-            _cartService = new CartService(context);
+            _cartService = cartService;
         }
 
         //This action will return the view for the Cart page

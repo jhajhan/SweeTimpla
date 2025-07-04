@@ -7,7 +7,10 @@ namespace DIYFilipinoDessert.Services
     {
         User Authenticate(string username, string password);
         bool Register(RegisterViewModel account);
-        Account GetAccount(string username, string password);
+        Account GetAccount(int userId);
+        bool EditDetails(EditDetailsViewModel model);
+        bool ChangePassword(ChangePasswordViewModel model);
+
         bool UserExists(string email, string password);
     }
 }

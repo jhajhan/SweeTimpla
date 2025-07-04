@@ -9,9 +9,9 @@ namespace DIYFilipinoDessert.Controllers
 
         private readonly IDessertKitService _dessertKitService;
 
-        public BuildYourOwnController(ApplicationDbContext context)
+        public BuildYourOwnController(IDessertKitService dessertKitService)
         {
-            _dessertKitService = new DessertKitService(context);
+            _dessertKitService = dessertKitService;
         }
          
         public IActionResult Index()
