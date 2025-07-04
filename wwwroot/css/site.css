@@ -501,6 +501,12 @@ transition: all 0.3s ease;
         color: #fff;
     }
 
+#kit-summary {
+    list-style: none;
+    padding-left: 0;
+    margin-left: 0;
+}
+
 .buildkit-summary {
     background: #f9f9f9;
     border-radius: 18px;
