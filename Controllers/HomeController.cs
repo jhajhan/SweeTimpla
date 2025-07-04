@@ -93,7 +93,7 @@ public class HomeController : Controller
     {
         HttpContext.Session.Clear();
         TempData["SuccessMessage"] = "You have been logged out successfully.";
-        return RedirectToAction("Index");
+        return RedirectToAction("Login", "Home");
     }
 
 

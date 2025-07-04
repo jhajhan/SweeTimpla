@@ -29,6 +29,10 @@
     </div>
 }
 
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
 <section id="Cart" class="cart-section">
     <h2 class="section-title">Your Cart</h2>
     <div class="cart-container">
@@ -63,7 +67,7 @@
                                 subtotal += total;
                                 <tr>
                                     <td>
-                                        <input value="@(item.Id)" type="checkbox" class="cart-select" data-total="@((item.Price * item.Quantity).ToString("0.00"))" checked />
+                                        <input value="@(item.Id)" type="checkbox" class="cart-select" data-total="@((item.Price * item.Quantity).ToString("0.00"))" />
                                     </td>
                                     <td class="item-name">@item.DessertKit?.Name</td>
                                     <td class="item-toppings">@(string.IsNullOrWhiteSpace(item.Toppings) ? "No toppings selected" : item.Toppings)</td>
@@ -102,7 +106,7 @@
                 <p><strong>Subtotal:</strong> ₱<span id="cart-subtotal">0.00</span></p>
                 <p><strong>Shipping:</strong> ₱<span id="cart-shipping">38.00</span></p>
                 <p><strong>Total:</strong> <span id="cart-total">₱0.00</span></p>
-                <button class="checkout-btn" onclick="openModal()">Proceed to Checkout</button>
+                <button id="proceedCheckoutBtn" class="checkout-btn" onclick="openModal()">Proceed to Checkout</button>
             </div>
 
             <!-- Checkout Modal -->

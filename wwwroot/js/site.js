@@ -735,5 +735,30 @@ function confirmRemoveFromCart(event, form) {
     return false;
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+    const proceedBtn = document.getElementById("proceedCheckoutBtn");
+
+    function updateProceedButton() {
+        const checkboxes = document.querySelectorAll(".cart-select");
+        const anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+
+        if (proceedBtn) {
+            proceedBtn.disabled = !anyChecked;
+            proceedBtn.style.opacity = anyChecked ? "1" : "0.5";
+            proceedBtn.style.cursor = anyChecked ? "pointer" : "not-allowed";
+        }
+    }
+
+    // Run initially
+    updateProceedButton();
+
+    // Listen to checkbox changes
+    document.addEventListener("change", function (e) {
+        if (e.target.classList.contains("cart-select")) {
+            updateProceedButton();
+        }
+    });
+});
+
 
 

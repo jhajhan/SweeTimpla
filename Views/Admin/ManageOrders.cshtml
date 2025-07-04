@@ -7,6 +7,11 @@
     int totalOrders = Model.Count();
     int pendingCount = Model.Count(o => o.Status == "Pending");
     int processedCount = Model.Count(o => o.Status == "Processed");
+    int shippedCount = Model.Count(o => o.Status == "Shipped");
+    int deliveredCount = Model.Count(o => o.Status == "Delivered");
+    int cancelledCount = Model.Count(o => o.Status == "Cancelled");
+	int returnedCount = Model.Count(o => o.Status == "Returned");
+
 }
 
 
@@ -75,7 +80,15 @@
         <div class="order-summary-row">
             <div><strong>📦 Total Orders:</strong> <span id="totalOrders">@totalOrders</span></div>
             <div><strong>⏳ Pending:</strong> <span id="pendingCount">@pendingCount</span></div>
-            <div><strong>✅ Processed:</strong> <span id="processedCount">@processedCount</span></div>
+            <div><strong>📦 Processed:</strong> <span id="processedCount">@processedCount</span></div>
+            <div><strong>🚚 Shipped:</strong> <span id="shippedCount">@shippedCount</span></div>
+            <div><strong>📦 Delivered:</strong> <span id="deliveredCount">@deliveredCount</span></div>
+            <div><strong>❌ Cancelled:</strong> <span id="cancelledCount">@cancelledCount</span></div>
+			<div><strong>🔄 Returned:</strong> <span id="returnedCount">@returnedCount</span></div>
+
+
+
+
         </div>
 
         <table class="order-table">
@@ -137,10 +150,15 @@
                 <input type="hidden" id="editOrderId" name="Id" />
                 <div class="form-group">
                     <label for="orderStatus">Order Status:</label>
-                    <select name="Status"id="orderStatus">
+                    <select name="Status" id="orderStatus">
                         <option value="Pending">Pending</option>
-                        <option value="Processed">Processed</option>
+                        <option value="Processed">To Be Shipped</option>
+                        <option value="Shipped">Shipped</option>
+                        <option value="Delivered">Delivered</option>
+                        <option value="Cancelled">Cancelled</option>
+                        <option value="Returned">Returned</option>
                     </select>
+
                 </div>
                 <div class="form-group">
                     <label for="paymentStatus">Payment Status:</label>
@@ -150,13 +168,12 @@
                     </select>
                 </div>
                 <div class="modal-actions">
-                    <button type="button" class="btn-cancel" id="cancelEdit">Cancel</button>
                     <button type="submit" class="btn-save" id="saveEdit">Save Changes</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <script src="~/js/admin.js"></script>
+    <script src="~/js/admin/manageorder.js"></script>
 </body>
 </html>
