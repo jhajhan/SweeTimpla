@@ -64,19 +64,19 @@
                     <label>Current Password</label>
                     <div class="password-container">
                         <input type="password" name="OldPassword" id="old-password" required>
-                        <ion-icon class="eye-icon" data-toggle="old-password" name="eye-outline"></ion-icon>
+                        <ion-icon name="eye-outline" class="eye-icon" onclick="togglePasswordProfile('old-password', this)"></ion-icon>
                     </div>
 
                     <label>New Password</label>
                     <div class="password-container">
                         <input type="password" name="NewPassword" id="new-password" required>
-                        <ion-icon class="eye-icon" data-toggle="new-password" name="eye-outline"></ion-icon>
+                        <ion-icon name="eye-outline" class="eye-icon" onclick="togglePasswordProfile('new-password', this)"></ion-icon>
                     </div>
 
                     <label>Confirm New Password</label>
                     <div class="password-container">
                         <input type="password" name="ConfirmPassword" id="confirm-password" required>
-                        <ion-icon class="eye-icon" data-toggle="confirm-password" name="eye-outline"></ion-icon>
+                        <ion-icon name="eye-outline" class="eye-icon" onclick="togglePasswordProfile('confirm-password', this)"></ion-icon>
                     </div>
 
                     <div class="update-cancel">
