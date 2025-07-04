@@ -7,7 +7,7 @@
 
 <form asp-controller="Cart" asp-action="AddToCart" method="post">
     <div class="mb-4 text-center">
-        <h2 class="fw-bold d-inline-block ms-2" style="color:#5A250F;">Build Your Own</h2>
+        <h2 class="fw-bold d-inline-block ms-2" style="color:#5A250F; padding-top: 50px;">Build Your Own</h2>
     </div>
     <p class="lead text-center" style="color:#5A250F;">
         Customize your own Filipino dessert kit.
@@ -30,32 +30,34 @@
             <b>Select toppings:</b> <br>
             <div class="form-check form-check-inline">
                 <input name="Toppings" class="form-check-input topping-option" type="checkbox" id="cheese" value="Cheese" data-price="50" />
-                <label class="form-check-label" for="cheese">Cheese</label>
+                <label class="form-check-label" for="cheese">Cheese <span class="text-muted">(₱50)</span></label>
             </div>
             <div class="form-check form-check-inline">
                 <input name="Toppings" class="form-check-input topping-option" type="checkbox" id="ube" value="Ube Halaya" data-price="40" />
-                <label class="form-check-label" for="ube">Ube Halaya</label>
+                <label class="form-check-label" for="ube">Ube Halaya <span class="text-muted">(₱40)</span></label>
             </div>
             <div class="form-check form-check-inline">
                 <input name="Toppings" class="form-check-input topping-option" type="checkbox" id="latik" value="Latik" data-price="30" />
-                <label class="form-check-label" for="latik">Latik</label>
+                <label class="form-check-label" for="latik">Latik <span class="text-muted">(₱30)</span></label>
             </div>
             <div class="form-check form-check-inline">
                 <input name="Toppings" class="form-check-input topping-option" type="checkbox" id="coconut" value="Toasted Coconut" data-price="20" />
-                <label class="form-check-label" for="coconut">Toasted Coconut</label>
+                <label class="form-check-label" for="coconut">Toasted Coconut <span class="text-muted">(₱20)</span></label>
             </div>
+
         </li>
 
         <li class="mb-2">
             <b>Optional extras:</b> <br>
             <div class="form-check">
                 <input name="Extras" class="form-check-input extra-option" type="checkbox" id="recipeCard" value="Printed Recipe Card" data-price="30" />
-                <label class="form-check-label" for="recipeCard">Printed recipe card</label>
+                <label class="form-check-label" for="recipeCard">Printed recipe card <span class="text-muted">(₱30)</span></label>
             </div>
             <div class="form-check">
                 <input name="Extras" class="form-check-input extra-option" type="checkbox" id="tools" value="Reusable Measuring Tools" data-price="50" />
-                <label class="form-check-label" for="tools">Reusable measuring tools</label>
+                <label class="form-check-label" for="tools">Reusable measuring tools <span class="text-muted">(₱50)</span></label>
             </div>
+
         </li>
 
         <li class="mb-2">

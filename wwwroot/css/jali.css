@@ -1,43 +1,4 @@
-﻿* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    background-color: #ffffff;
-    color: #1a1a1a;
-    line-height: 1.6;
-}
-
-/* main section */
-.main {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 60px 40px;
-    flex-wrap: wrap;
-}
-
-.men_text h1 {
-    font-size: 50px;
-    font-weight: bold;
-    color: #1a1a1a;
-}
-
-.men_text span {
-    color: #22c55e;
-    font-family: 'Pacifico', cursive;
-}
-
-.main_image img {
-    width: 400px;
-    max-width: 100%;
-    border-radius: 16px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-    margin-top: 80px;
-    margin-left: auto;
-}
+﻿
 
 /* main description paragraph */
 section#Home p {
