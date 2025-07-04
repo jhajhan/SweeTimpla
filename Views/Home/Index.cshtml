@@ -43,16 +43,21 @@
         {
             <div class="col-md-3 mb-4">
                 <div class="card shadow-sm rounded-4">
-                    <img src="@kit.ImageUrl" class="card-img-top rounded-top-4" alt="@kit.Name">
-                    <div class="card-body text-center">
-                        <h5 class="card-title" style="color: #5A250F;">@kit.Name</h5>
-                        <p style="color: #5A250F;">₱@kit.Price</p>
-                        <a href="#" class="btn btn-outline-success buy-now-btn">Buy Now</a>
+                    <div class="kit-card">
+                        <img src="@kit.ImageUrl" class="card-img-top rounded-top-4" alt="@kit.Name">
+                        <div class="card-body text-center">
+                            <h5 class="card-title" style="color: #5A250F;">@kit.Name</h5>
+                            <h4 class="card-desc flex-grow-1 d-flex align-items-start justify-content-center">@kit.Description</h4>
+                            <p style="color: #5A250F;">₱@kit.Price</p>
+                            <a href="#" class="btn btn-outline-success buy-now-btn">Buy Now</a>
+                        </div>
                     </div>
                 </div>
             </div>
         }
     </div>
+
+
 
 <!-- Why Choose Us -->
 <div class="container py-5" style="background-color: #FFE3A8;">

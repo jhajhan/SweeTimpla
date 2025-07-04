@@ -180,6 +180,51 @@ body, header, .navbar, .custom-navbar {
     }
 }
 
+.card {
+    height: 580px; /* Set to your preferred height */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    transition: transform 0.18s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.kit-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.card-body {
+    flex: 1 1 0%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* So button always at bottom */
+    flex: 1 1 0%;
+    min-height: 210px; /* Adjust so all cards have same space for content */
+}
+
+.card-title,
+.card-body h4 {
+    margin-bottom: 0.5rem;
+}
+
+.card-body h4 {
+    flex: 1 1 auto; /* The description will take up available space */
+    margin-bottom: 0.5rem;
+    min-height: 72px; /* Adjust for your preferred baseline (so descriptions align) */
+    display: flex;
+    align-items: flex-end; /* Ensures bottom alignment of short descriptions */
+}
+
+.card-img-top {
+    width: 100%;
+    aspect-ratio: 1/1; /* Forces square shape */
+    object-fit: cover; /* Ensures image covers square without stretching */
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+}
+
 .card.rounded-4 {
     border-radius: 20px !important;
 }
@@ -187,6 +232,22 @@ body, header, .navbar, .custom-navbar {
 .card-img-top.rounded-top-4 {
     border-top-left-radius: 20px !important;
     border-top-right-radius: 20px !important;
+}
+
+.card-actions {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.card-desc {
+    min-height: 90px; /* adjust this as needed to fit your tallest description */
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    text-align: center;
 }
 
 .buy-now-btn {
@@ -200,10 +261,6 @@ body, header, .navbar, .custom-navbar {
 
 .buy-now-btn:hover {
     background: #96C24E;
-}
-
-.card {
-    transition: transform 0.18s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.18s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card:hover {

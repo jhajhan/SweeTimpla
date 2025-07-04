@@ -46,13 +46,13 @@
                 <div class="card shadow-sm rounded-4">
                     <div class="kit-card" data-key="@kit.Name.ToLower()">
                         <img src="@kit.ImageUrl" class="card-img-top rounded-top-4" alt="@kit.Name" />
-                        <div class="card-body text-center">
+                        <div class="card-body text-center d-flex flex-column">
                             <h5 class="card-title" style="color: #5A250F;">@kit.Name</h5>
-                            <h4>@kit.Description</h4>
-                            <div class="mb-2">
+                            <h4 class="card-desc flex-grow-1 d-flex align-items-start justify-content-center">@kit.Description</h4>
+                            <div class="card-actions mt-auto">
                                 <span class="price">₱@kit.Price</span>
+                                <button class="view-details ms-2" onclick="openKitDetails(@kit.Id)">View Details</button>
                             </div>
-                            <button class="view-details" onclick="openKitDetails(@kit.Id)">View Details</button>
                         </div>
                     </div>
                 </div>
