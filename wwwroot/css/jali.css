@@ -583,32 +583,34 @@ section#Home p {
 
 .order-card {
     background-color: #FFFFFF;
-    border: 2px solid #5A250F;
+    border: 1px solid #A3D86B;
     border-radius: 10px;
     flex-direction: row;
     display: flex;
     flex-wrap: wrap;
-    padding: 1rem;
+    padding: 0.8rem;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    max-width: 500px;
-    min-width: 500px;
+    max-width: 420px;
+    min-width: 420px;
     margin: 0 auto;
 }
 
 .order-image img {
-    width: 190px;
-    height: 190px;
+    width: 150px;
+    height: 150px;
     border-radius: 8px;
     object-fit: cover;
-    margin-right: 15px;
+    margin-right: 12px;
 }
 
 .order-details {
     flex: 2;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.4rem;
+    font-size: 0.9rem;
 }
+
 
 .status {
     padding: 4px 4px;
@@ -686,7 +688,7 @@ section#Home p {
 /*============================================ profile settings styles ==================================================*/
 /* Profile Section */
 #profile {
-    padding: 30px;
+    padding: 20px;
     display: flex;
     justify-content: center;
     margin-top: 1px;
@@ -695,37 +697,37 @@ section#Home p {
 #profile-settings {
     display: flex;
     background: #FFFFFF;
-    border-radius: 12px;
+    border-radius: 10px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    max-width: 1800px;
-    width: 2000px;
-    height: 750px;
+    max-width: 1200px;
+    width: 100%;
+    height: 600px;
     overflow: hidden;
 }
 
 /* Sidebar */
 .profile-sidebar {
     background-color: #f0f0f0;
-    color: #FFFFFF;
-    padding: 30px;
-    width: 280px;
+    padding: 20px;
+    width: 220px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .profile-pic {
-    width: 160px;
-    height: 160px;
+    width: 120px;
+    height: 120px;
     object-fit: cover;
     border-radius: 50%;
-    border: 4px solid #5A250F;
-    margin-bottom: 20px;
+    border: 3px solid #5A250F;
+    margin-bottom: 15px;
 }
 
 .profile-sidebar h3 {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     color: #5A250F;
+    font-size: 1rem;
 }
 
 .settings-menu {
@@ -733,21 +735,23 @@ section#Home p {
     width: 100%;
     padding: 0;
     margin: 0;
+    font-size: 0.9rem;
 }
 
     .settings-menu li {
-        margin: 0; /* Removed margin so lines connect cleanly */
+        margin: 0;
     }
 
     .settings-menu :last-child {
-        margin-top: 410px;
+        margin-top: 350px;
     }
 
 /* Profile Content */
 .profile-content {
-    padding: 30px;
+    padding: 20px;
     flex: 1;
     background-color: #FFF;
+    font-size: 0.9rem;
 }
 
 .profile-section {
@@ -761,83 +765,77 @@ section#Home p {
 .profile-heading {
     color: #5A250F;
     margin-bottom: 10px;
-    font-size: 30px;
+    font-size: 1.5rem;
 }
 
 /* Form Styles */
 form label {
     display: block;
-    margin: 10px 0 5px;
+    margin: 8px 0 4px;
     color: #5A250F;
+    font-size: 0.85rem;
 }
 
 form input {
     width: 100%;
-    padding: 5px;
+    padding: 4px 6px;
+    font-size: 0.85rem;
     border: 1px solid #ccc;
-    border-radius: 6px;
-    margin-bottom: 5px;
+    border-radius: 5px;
+    margin-bottom: 6px;
 }
 
     form input:disabled {
         background-color: #f3f3f3;
     }
 
+/* Password field */
 .password-container {
     position: relative;
 }
 
     .password-container input {
-        width: 100%;
-        padding-right: 40px;
+        padding-right: 35px;
     }
 
 .eye-icon {
     position: absolute;
-    right: 10px;
+    right: 8px;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
     color: #5A250F;
+    font-size: 1rem;
 }
 
 /* Buttons */
 .normal {
     background-color: #A3D86B;
-    color: #000000;
+    color: #000;
     border: none;
-    padding: 5px 10px;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 0.85rem;
+    margin-right: 8px;
+    border-radius: 5px;
     cursor: pointer;
     transition: background 0.3s;
 }
 
     .normal:hover {
         background-color: #96C24E;
-        color: #000000;
     }
 
+/* Cancel/Update section */
 .update-cancel {
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
-.eye-icon {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #5A250F;
-    font-size: 1.2rem;
-}
-
-/* Special styling for the Sign Out button */
+/* Sign Out button */
 .signout-btn {
-    background-color: #5A250F; /* Red */
+    background-color: #5A250F;
     color: #fff;
-    padding: 12px 16px;
+    padding: 10px 14px;
+    font-size: 0.9rem;
     border: none;
     width: 100%;
     font-weight: bold;
@@ -848,7 +846,5 @@ form input {
 
     .signout-btn:hover {
         background-color: #864524;
-        transform: translateX(4px);
+        transform: translateX(3px);
     }
-
-
