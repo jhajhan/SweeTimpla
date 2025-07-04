@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
             editServingSize.value = button.getAttribute("data-serving");
             editPrice.value = button.getAttribute("data-price");
             editQuantity.value = button.getAttribute("data-quantity");
-            editIsFeatured.value = button.getAttribute("data-isfeatured");
+            editIsFeatured.value = button.getAttribute("data-isfeatured") === "True" ? "true" : "false";
             editCookTime.value = button.getAttribute("data-cooktime");
             editTotalTime.value = button.getAttribute("data-totaltime");
             editInstructions.value = button.getAttribute("data-instructions");
