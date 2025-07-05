@@ -761,26 +761,18 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // ======================================================================== Profile Settings Functionality ========================================================================
-document.addEventListener('DOMContentLoaded', () => {
-    // Select only the profile menu links, not the form
-    
+function togglePasswordProfile(inputId, iconElement) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
 
-    // Toggle password visibility
-    document.querySelectorAll('.eye-icon').forEach(icon => {
-        icon.addEventListener('click', function () {
-            const targetId = this.getAttribute('data-toggle');
-            const input = document.getElementById(targetId);
-
-            if (input.type === 'password') {
-                input.type = 'text';
-                this.setAttribute('name', 'eye-off-outline');
-            } else {
-                input.type = 'password';
-                this.setAttribute('name', 'eye-outline');
-            }
-        });
-    });
-});
+    if (input.type === "password") {
+        input.type = "text";
+        iconElement.setAttribute("name", "eye-off-outline");
+    } else {
+        input.type = "password";
+        iconElement.setAttribute("name", "eye-outline");
+    }
+}
 
 function confirmLogout(event, form) {
     event.preventDefault();
