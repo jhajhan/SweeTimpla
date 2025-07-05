@@ -689,7 +689,7 @@ section#Home p {
     padding: 30px;
     display: flex;
     justify-content: center;
-    margin-top: 50px;
+    margin-top: 20px;
 }
 
 #profile-settings {
@@ -699,7 +699,7 @@ section#Home p {
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     max-width: 1800px;
     width: 2000px;
-    height: 700px;
+    height: 750px;
     overflow: hidden;
 }
 
@@ -733,32 +733,15 @@ section#Home p {
     width: 100%;
     padding: 0;
     margin: 0;
-    border-top: 4px solid #e0e0e0; /* Top line to start */
 }
 
     .settings-menu li {
         margin: 0; /* Removed margin so lines connect cleanly */
-        border-bottom: 4px solid #e0e0e0; /* Line under each item */
     }
 
-        .settings-menu li a {
-            display: block;
-            color: #5A250F;
-            padding: 12px 16px;
-            text-decoration: none;
-            border-radius: 0; /* Keep corners clean when lines are present */
-            transition: background 0.3s;
-            cursor: pointer;
-        }
-
-
-            .settings-menu li a:hover {
-                background-color: rgba(0, 0, 0, 0.02);
-                border-left: 3px solid #ccc;
-                padding-left: 10px;
-                transform: translateX(2px);
-                transition: background 0.3s, transform 0.3s, border-left 0.3s;
-            }
+    .settings-menu :last-child {
+        margin-top: 410px;
+    }
 
 /* Profile Content */
 .profile-content {
@@ -777,7 +760,8 @@ section#Home p {
 
 .profile-heading {
     color: #5A250F;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    font-size: 30px;
 }
 
 /* Form Styles */
@@ -789,10 +773,10 @@ form label {
 
 form input {
     width: 100%;
-    padding: 10px;
+    padding: 5px;
     border: 1px solid #ccc;
     border-radius: 6px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
     form input:disabled {
@@ -822,8 +806,9 @@ form input {
     background-color: #A3D86B;
     color: #000000;
     border: none;
-    padding: 10px 20px;
+    padding: 5px 10px;
     margin-right: 10px;
+    margin-bottom: 10px;
     border-radius: 6px;
     cursor: pointer;
     transition: background 0.3s;
@@ -831,7 +816,7 @@ form input {
 
     .normal:hover {
         background-color: #96C24E;
-        color: #000;
+        color: #000000;
     }
 
 .update-cancel {
@@ -848,14 +833,9 @@ form input {
     font-size: 1.2rem;
 }
 
-
-
-
-
-
 /* Special styling for the Sign Out button */
 .signout-btn {
-    background-color: #DC3545; /* Red */
+    background-color: #5A250F; /* Red */
     color: #fff;
     padding: 12px 16px;
     border: none;
@@ -866,10 +846,9 @@ form input {
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.signout-btn:hover {
-    background-color: #b02a37;
-    transform: translateX(4px);
-}
-
+    .signout-btn:hover {
+        background-color: #864524;
+        transform: translateX(4px);
+    }
 
 
