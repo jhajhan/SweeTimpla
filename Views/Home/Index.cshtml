@@ -4,81 +4,87 @@
     ViewData["Title"] = "Home";
 }
 
-<!-- SweeTimpla Modern Hero Section: Side-by-side, Vertically Centered -->
-<div class="sweetimpla-hero w-100 d-flex align-items-center justify-content-center" style="min-height: 90vh;">
-    <div class="container-fluid px-0">
-        <div class="row align-items-center justify-content-center mx-0" style="min-height:70vh;">
-            <!-- Left: Text and buttons -->
-            <div class="col-lg-6 col-12 text-lg-start text-center px-4 px-lg-5 mb-4 mb-lg-0">
-                <p class="mb-2 fw-bold" style="color: #5A250F;">Hungry?</p>
-                <h1 class="display-3 fw-bold mb-3" style="color:#222;">
-                    <span style="color:#A3D86B;">SweeTimpla</span> Brings You Home
-                </h1>
-                <p class="lead mb-4" style="color: #555555;">
-                    Here you’ll find all the best quality and fun Filipino dessert kits to satisfy your sweet cravings.
-                </p>
-                <div class="d-flex gap-3 justify-content-lg-start justify-content-center flex-wrap">
-                    <a class="btn btn-lg btn-main" asp-controller="DessertKit" asp-action="Index">Order A Kit</a>
-                    <a class="btn btn-lg btn-main" asp-controller="BuildYourOwn" asp-action="Index">Build Your Own Kit</a>
+@section Hero {
+    <!-- SweeTimpla Modern Hero Section: Side-by-side, Vertically Centered -->
+    <div class="sweetimpla-hero d-flex align-items-center" style="min-height: 90vh;">
+        <div class="container-fluid px-0">
+            <div class="row align-items-center mx-0" style="min-height:70vh;">
+                <!-- Left: Text and buttons -->
+                <div class="col-lg-6 col-12 text-lg-start text-center px-4 px-lg-5 mb-4 mb-lg-0 hero-text-col" style="margin-left: 115px;">
+                    <p class="mb-2 fw-bold" style="color: #5A250F;">Hungry?</p>
+                    <h1 class="display-3 fw-bold mb-3" style="color:#222;">
+                        <span style="color:#A3D86B;">SweeTimpla</span> <br>
+                        Brings You Home
+                    </h1>
+                    <p class="lead mb-4" style="color: #555555;">
+                        Here you’ll find all the best quality and fun Filipino dessert kits <br> to satisfy your sweet cravings.
+                    </p>
+                    <div class="d-flex gap-3 justify-content-lg-start justify-content-center flex-wrap">
+                        <a class="btn btn-lg btn-main" asp-controller="DessertKit" asp-action="Index">Order A Kit</a>
+                        <a class="btn btn-lg btn-main" asp-controller="BuildYourOwn" asp-action="Index">Build Your Own Kit</a>
+                    </div>
                 </div>
-            </div>
-            <!-- Cupcake Hihi -->
-            <div class="col-lg-5 d-flex justify-content-center align-items-center px-3 px-lg-4 position-relative">
-                <img src="~/images/Cupcake.png"
-                     alt="Cupcake"
-                     style="width: 330px; max-width: 100%; height: auto; z-index:2; position:relative;" />
+                <!--Cupcake Hihi
+                <div class="col-lg-5 d-flex justify-content-center align-items-center px-3 px-lg-4 position-relative">
+                    <img src="~/images/Cupcake.png"
+                         alt="Cupcake"
+                         style="width: 330px; max-width: 100%; height: auto; z-index:2; position:relative;" />
+                </div>
+                -->
             </div>
         </div>
     </div>
-</div>
+}
 
 
 
 
 
 <!-- Featured Kits -->
-    <h2 class="text-center fw-bold mb-4" style="color: #5A250F; padding-bottom: 20px;">Featured Dessert Kits</h2>
-    <div class="row justify-content-center">
-        @foreach (var kit in Model)
-        {
-            <div class="col-md-3 mb-4">
-                <div class="card shadow-sm rounded-4">
-                    <div class="kit-card">
-                        <img src="@kit.ImageUrl" class="card-img-top rounded-top-4" alt="@kit.Name">
-                        <div class="card-body text-center">
-                            <h5 class="card-title" style="color: #5A250F;">@kit.Name</h5>
-                            <h4 class="card-desc flex-grow-1 d-flex align-items-start justify-content-center">@kit.Description</h4>
-                            <p style="color: #5A250F;">₱@kit.Price</p>
-                            <a href="#" class="btn btn-outline-success buy-now-btn">Buy Now</a>
-                        </div>
-                    </div>
+<h2 class="text-center fw-bold mb-4" style="color: #5A250F; padding-bottom: 20px;">Featured Dessert Kits</h2>
+<div class="row justify-content-center">
+    @foreach (var kit in Model)
+    {
+        <div class="col-md-3 mb-4">
+            <div class="card shadow-sm rounded-4">
+                <img src="@kit.ImageUrl" class="card-img-top rounded-top-4" alt="@kit.Name">
+                <div class="card-body text-center">
+                    <h5 class="card-title" style="color: #5A250F;">@kit.Name</h5>
+                    <p style="color: #5A250F;">₱@kit.Price</p>
+                    <a href="#" class="btn btn-outline-success buy-now-btn">Buy Now</a>
                 </div>
             </div>
-        }
-    </div>
+        </div>
+    }
+</div>
 
 
 
 <!-- Why Choose Us -->
-<div class="container py-5" style="background-color: #FFE3A8;">
-    <h2 class="text-center fw-bold mb-4" style="color: #5A250F;">Why Choose SweeTimpla?</h2>
-    <div class="row text-center">
-        <div class="col-md-4">
-            <div class="card p-3 shadow-sm rounded-4" style="background: #FFF;">
-                <h5 style="color: #5A250F;">✨ Authentic Filipino Flavor</h5>
-                <p style="color: #5A250F;">All recipes and kits are inspired by classic Filipino favorites, prepared the traditional way.</p>
+<div class="container-fluid py-5" style="background-color: rgba(255, 227, 168, 0.75); margin: 50px 0; border-radius: 20px;">
+    <div class="container">
+        <h2 class="text-center fw-bold mb-4" style="color: #5A250F;">Why Choose SweeTimpla?</h2>
+        <div class="row text-center align-items-stretch" style="margin: 0 20px;">
+            <div class="col-md-4">
+                <div class="card p-3 shadow-sm rounded-4 h-100" style="background: #FFF;">
+                    <h5 style="color: #5A250F;">✨ Authentic Filipino Flavor</h5>
+                    <div class="sweetimpla-divider mb-3"></div>
+                    <p style="color: #5A250F;">All recipes and kits are inspired by classic Filipino favorites, prepared the traditional way.</p>
+                </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card p-3 shadow-sm rounded-4" style="background: #FFF;">
-                <h5 style="color: #5A250F;">🍃 Locally Sourced Goodness</h5>
-                <p style="color: #5A250F;">We support local farmers and producers for the freshest, highest-quality ingredients.</p>
+            <div class="col-md-4">
+                <div class="card p-3 shadow-sm rounded-4 h-100" style="background: #FFF;">
+                    <h5 style="color: #5A250F;">🍃 Locally Sourced Goodness</h5>
+                    <div class="sweetimpla-divider mb-3"></div>
+                    <p style="color: #5A250F;">We support local farmers and producers for the freshest, highest-quality ingredients.</p>
+                </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card p-3 shadow-sm rounded-4" style="background: #FFF;">
-                <h5 style="color: #5A250F;">🧑‍🍳 Easy & Fun for Everyone</h5>
-                <p style="color: #5A250F;">Our kits are designed for all ages — perfect for bonding, learning, and enjoying desserts at home.</p>
+            <div class="col-md-4">
+                <div class="card p-3 shadow-sm rounded-4 h-100" style="background: #FFF;">
+                    <h5 style="color: #5A250F;">🧑‍🍳 Easy & Fun for Everyone</h5>
+                    <div class="sweetimpla-divider mb-3"></div>
+                    <p style="color: #5A250F;">Our kits are designed for all ages — perfect for bonding, learning, and enjoying desserts at home.</p>
+                </div>
             </div>
         </div>
     </div>
